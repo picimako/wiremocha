@@ -1,7 +1,9 @@
 # WireMocha
 
+![](https://img.shields.io/badge/since-IJ2021.3-blue) ![](https://img.shields.io/badge/until-IJ2022.1-blue)
+
 <!-- Plugin description -->
-This IntelliJ-based plugin provides framework integration for the [WireMock](http://wiremock.org) library.
+WireMocha is an IntelliJ-based plugin that provides framework integration for the [WireMock](http://wiremock.org) library.
 
 It offers various tools to generate and validate WireMock related test code, and to provide additional contextual information.
 <!-- Plugin description end -->
@@ -10,15 +12,13 @@ It offers various tools to generate and validate WireMock related test code, and
 
 The WireMocha plugin depends on two specific plugins whose absence can alter the functionality of the plugin.
 
-Although the both the JUnit and the IntelliLang plugins are supposed to be bundled with the IDE, it can happen that they are missing or disabled.
+Although both the JUnit and the IntelliLang plugins are supposed to be bundled with the IDE, it can happen that they are missing or disabled.
 On the JUnit plugin, JUnit Rule and extension field generation actions depend (see [JUnit Rules and Extensions](docs/junit_rules_and_extensions.md)), while 
 on the IntelliLang plugin, various language injections depend (see [Language Injections](docs/language_injections.md)).
 
 ## Supported IDEs
 
-The list of supported IDEs include all free versions of IntelliJ (Community, Educational, etc.) as well as Ultimate, starting from version 2021.2 to 2022.1 as of now,
-always supporting the last three major versions. Thus, once a new major version is released, along with adding support to the new one,
-the plugin will drop support for the oldest supported major version of the IDE.
+The list of supported IDEs include all free versions of IntelliJ (Community, Educational, etc.) as well as Ultimate.
 
 ## Documentation
 
@@ -31,8 +31,3 @@ You can find detailed documentation in the dedicated documents below:
 - [Stubbing](docs/stubbing.md)
 - [JUnit Rules and Extensions](docs/junit_rules_and_extensions.md)
 - [Language Injections](docs/language_injections.md)
-
----
-Plugin based on the [IntelliJ Platform Plugin Template][template].
-
-[template]: https://github.com/JetBrains/intellij-platform-plugin-template

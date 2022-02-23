@@ -121,7 +121,7 @@ The logic is the following:
 
 | httpPort specified | httpsEnabled | httpsPort specified | inlay hint                   |
 |--------------------|--------------|---------------------|------------------------------|
-| false              | false        | false               | dynamic HTTP port            |
+| false              | false/true   | false/true          | dynamic HTTP port            |
 | false              | true         | false               | dynamic HTTP and HTTPS ports |
 | true               | true         | false               | dynamic HTTPS port           |
 

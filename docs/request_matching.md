@@ -104,16 +104,32 @@ essentially converting between the two forms.
 
 From the fluent `x.and(y)`/`x.or(y)` forms the conversion is possible only when all operands are combined with `and()` or `or()`, respectively.
 
-The intention is generally available if there are at least two operands specified.
+The intention is generally available if there are at least two operands specified. Bold text below means a selected code snippet.
 
-| From                    | To                      | Availability                                      |
-|-------------------------|-------------------------|---------------------------------------------------|
-| `WireMock.and(x, y, z)` | `x.and(y).and(z)`       | When cursor is on and().                          |
-| `WireMock.or(x, y, z)`  | `y.or(y).or(z)`         | When cursor is on or().                           |
-| `x.and(y).and(z)`       | `WireMock.and(x, y, z)` | When the whole expression to convert is selected. |
-| `y.or(y).or(z)`         | `WireMock.or(x, y, z)`  | When the whole expression to convert is selected. |
+**From WireMock-based**
+
+| From                        | To                                    | Availability                                                      |
+|-----------------------------|---------------------------------------|-------------------------------------------------------------------|
+| `WireMock.and(x, y, z)`     | `x.and(y).and(z)`                     | When cursor is on and().                                          |
+| `WireMock.or(x, y, z)`      | `x.or(y).or(z)`                       | When cursor is on or().                                           |
+
+**From fluent**
+
+| From                | To                          | Availability                                                      |
+|---------------------|-----------------------------|-------------------------------------------------------------------|
+| `x.and(y).and(z)`   | `WireMock.and(x, y, z)`     | When at least one `x.and(y)` portion of a call chain is selected. |
+| **x.and(y)**.and(z) | `WireMock.and(x, y).and(z)` | When at least one `x.and(y)` portion of a call chain is selected. |
+| `x.or(y).or(z)`     | `WireMock.or(x, y, z)`      | When at least one `x.or(y)` portion of a call chain is selected.  |
+| **x.or(y)**.or(z)   | `WireMock.or(x, y).or(z)`   | When at least one `x.or(y)` portion of a call chain is selected.  |
 
 Note: if you want to flip the operands of a fluent call, there is already an intention called *Flip commutative method call* that can do that.
+
+**Mixed**
+
+| From                        | To                                    | Availability             |
+|-----------------------------|---------------------------------------|--------------------------|
+| `x.and(WireMock.and(y, z))` | `WireMock.and(x, WireMock.and(x, z))` | When cursor is on and(). |
+| `WireMock.and(x, y).and(z)` | -                                     | Not available.           |
 
 ## Replacing date-time "now" calls with convenience method calls
 
