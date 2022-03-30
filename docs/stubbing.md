@@ -1,17 +1,26 @@
 # Stubbing
 
-Features related to WireMock [stubbing](http://wiremock.org/docs/stubbing/).
+- [Simplify response related stubbing](#simplify-response-related-stubbing)
+- [Duplicate configuration in response definitions (Java DSL)](#duplicate-configuration-in-response-definitions-java-dsl)
+- [Duplicate configuration in response definitions (JSON DSL)](#duplicate-configuration-in-response-definitions-json-dsl)
+- [Incorrect configuration in response definitions](#incorrect-configuration-in-response-definitions)
+- [Gutter icon for response definition body file paths](#gutter-icon-for-response-definition-body-file-paths)
+- [Convert between various response body definition modes](#convert-between-various-response-body-definition-modes)
+  - [Inline the contents of a body file as a body string](#inline-the-contents-of-a-body-file-as-a-body-string)
+  - [Extract string body into a body file](#extract-string-body-into-a-body-file)
+  - [Base64-encode body string](#base64-encode-body-string)
+  - [Decode base64-encoded body](#decode-base64-encoded-body)
+- [Create mapping file from template](#create-mapping-file-from-template)
 
 ## Simplify response related stubbing
 
-![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
-There are many convenience methods available in the `WireMock` class to simplify and shorten stubbing of responses in various ways.
+There are many convenience methods available in the `WireMock` class to simplify and shorten stubbing of responses.
 
-This inspection reports cases when response specific stubbing may be replaced with a shorter version (a convenience method) of it,
-also providing a quick fix for each replacement.
+This inspection reports cases when response specific stubbing may be replaced with a shorter version, also providing a quick fix for each replacement.
 
-Since the form `WireMock.aResponse().withStatus(...)` (for status codes that do not have convenience methods) might be more descriptive than using `WireMock.status(...)`,
+NOTE: Since the form `WireMock.aResponse().withStatus(...)` (for status codes that do not have convenience methods) might be more descriptive than using `WireMock.status(...)`,
 there is a flag in the inspection's settings whether to report such cases. It is disabled by default.
 
 **Status 2xx**
@@ -94,24 +103,137 @@ From: aResponse().withStatus(status)
   to: status(status)
 ```
 
-## Duplicate configuration in response definitions
+## Duplicate configuration in response definitions (Java DSL)
 
-![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/inspection-orange)
 
-Currently, this inspection reports incorrect duplicate header configuration in `ResponseDefinitionBuilder` call chains. When a header name is specified in
-multiple `.withHeader()` calls, that header's value would be overridden.
+This inspection reports duplicate configuration in `ResponseDefinitionBuilder` call chains.
+
+### withHeader()
+
+![](https://img.shields.io/badge/since-1.0.0-blue)
+
+When a header name is specified in multiple `.withHeader()` calls, that header's value would be overridden.
 
 ```java
 //Both "Accept-Language" string literals are highlighted
-stubFor(get("/").willReturn(aResponse().withHeader("Accept-Language", "HU").with("Content-Length", "1024").withHeader("Accept-Language", "JP")));
+aResponse().withHeader("Accept-Language", "HU").withHeader("Content-Length", "1024").withHeader("Accept-Language", "JP");
 
 //Both ACCEPT_LANGUAGE constant expressions are highlighted
-stubFor(get("/").willReturn(aResponse().withHeader(ACCEPT_LANGUAGE, "HU").with("Content-Length", "1024").withHeader(ACCEPT_LANGUAGE, "JP")));
+aResponse().withHeader(ACCEPT_LANGUAGE, "HU").withHeader("Content-Length", "1024").withHeader(ACCEPT_LANGUAGE, "JP");
+```
+
+A quick fix is also available (since v1.0.1) to remove duplicate calls for the header name, keeping the call that the user invokes the quick fix on:
+
+```java
+//From (where 'Accept-Language: HU' is selected to be kept):
+aResponse().withHeader("Accept-Language", "HU").withHeader("Accept-Language", "JA");
+//to:
+aResponse().withHeader("Accept-Language", "HU");
+
+//From (where 'Accept-Language: JA' is selected to be kept):
+aResponse()
+    .withHeader("Accept-Language", "HU")
+    .withHeader("Content-Length", "1024")
+    .withBodyFile("filename")
+    .withHeader("Accept-Language", "JA")
+    .withHeader("Accept-Language", "RU");
+//to:
+aResponse()
+    .withHeader("Content-Length", "1024")
+    .withBodyFile("filename")
+    .withHeader("Accept-Language", "JA");
+```
+
+### with\*Body*()
+
+![](https://img.shields.io/badge/since-1.0.1-blue)
+
+When the response body is defined multiple ways (or even multiple times the same way), it can be confusing which body is actually applied, and these definitions will override each other.
+
+This inspection supports the following response body definition calls: `withJsonBody()`, `withBody()`, `withBase64Body()`, `withBodyFile()`.
+Regardless of if multiple of the same method, or different methods are called, they are all reported and highlighted if duplicates are found.
+
+```java
+stubFor(get("/").willReturn(aResponse().withBodyFile("path/to/a_file.json").withBody("{\"aJson\": \"string\"}")));
+```
+
+The related quick fix removes duplicate calls, keeping the call that the user invokes the quick fix on:
+
+```java
+//From (where the first 'withBodyFile()' call is selected to be kept):
+aResponse().withBodyFile("path/to/a_file.json").withBodyFile("path/to/another_file.json");
+//to:
+aResponse().withBodyFile("path/to/a_file.json");
+
+//From (where the 'withBody()' call is selected to be kept):
+aResponse()
+    .withBodyFile("path/to/a_file.json")
+    .withBase64Body("eyJhSnNvbiI6ICJzdHJpbmcifQ==")
+    .withHeader("Accept-Language", "HU")
+    .withBody("{}")
+    .withFixedDelay(200)
+    .withJsonBody(jsonBody);
+//to:
+aResponse()
+    .withHeader("Accept-Language", "HU")
+    .withBody("{}")
+    .withFixedDelay(200);
+```
+
+## Duplicate configuration in response definitions (JSON DSL)
+
+![](https://img.shields.io/badge/inspection-orange)
+
+This inspection reports duplicate configuration in `response` properties in mapping files.
+
+### \*Body*
+
+![](https://img.shields.io/badge/since-1.0.1-blue)
+
+This inspection is the same as the Java DSL for reporting duplicate response body definitions.
+
+It supports the following response body definition properties: `body`, `base64Body`, `bodyFileName`, `jsonBody`
+Regardless of if multiple of the same property, or different properties are specified, they are all reported and highlighted if duplicates are found.
+
+```json
+{
+  "request": { ... },
+  "response": {
+    "status": 200,
+    "bodyFileName": "a/response_body.json",
+    "body": "{\"aJson\": \"string\"}"
+  }
+}
+```
+
+The related quick fix removes duplicate properties, keeping the property that the user invokes the quick fix on:
+
+```json
+//From (where 'body' is selected to be kept):
+{
+  "request": { ... },
+  "response": {
+    "status": 200,
+    "bodyFileName": "a/response_body.json",
+    "body": "{\"aJson\": \"string\"}",
+    "base64Body": "eyJhSnNvbiI6ICJzdHJpbmcifQ=="
+  }
+}
+
+//to:
+{
+  "request": { ... },
+  "response": {
+    "status": 200,
+    "body": "{\"aJson\": \"string\"}"
+  }
+}
 ```
 
 ## Incorrect configuration in response definitions
 
-![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 This inspection is an umbrella for reporting any issue that is deemed incorrect when configuring stub response definitions.
 
@@ -146,48 +268,48 @@ public class ATest {
 
 ## Gutter icon for response definition body file paths
 
-![](https://img.shields.io/badge/linemarker-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/linemarker-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
-`ResponseDefinitionBuilder#withBodyFile()` takes argument a relative path (by default relative to `src/test/resources/__files`,
-see [Specifying the response body](http://wiremock.org/docs/stubbing/#specifying-the-response-body)) to a file providing the contents of the response body.
+`ResponseDefinitionBuilder#withBodyFile()` takes argument a path, relative to a `__files` directory (by default `src/test/resources/__files`,
+see [Specifying the response body](http://wiremock.org/docs/stubbing/#specifying-the-response-body)), to a file providing the contents of the response body.
 
-Similarly, in the JSON mapping representation, the `response.bodyFileName` property behaves the same.
+In JSON mappings the `response.bodyFileName` property behaves the same.
 
 To mark the location of such files, a line marker/gutter icon is added if the path can be resolved, to which the file reference is always added.
 
-**Java**
+### Java
+
+The icon is displayed if the path can be resolved to any of the `__files` directories in the project, if there are multiple.
 
 ![response_definition_with_body_file_gutter_icon_java](assets/response_definition_with_body_file_gutter_icon_java.png)
 
-**JSON**
+### JSON
+
+The icon is displayed if the path can be resolved to the `_files` directory sibling of the mapping file's parent (at any level) `mappings` directory.
 
 ![response_definition_with_body_file_gutter_icon_json](assets/response_definition_with_body_file_gutter_icon_json.PNG)
 
 ## Convert between various response body definition modes
 
-WireMock provides multiple ways to specify response bodies, so naturally there can be various ways of conversion between these approaches.
+WireMock provides multiple ways to specify response bodies, so naturally there can be various ways of conversion between them.  The aim of the following intentions is to help with those conversions.
 
-The aim of the following intentions is to help with those conversions.
-
-NOTE: the validation whether a JSON file is an actual mapping file is currently determined by whether it is located in a folder called **mappings**.
-A more sophisticated validation may come in a later phase. 
+NOTE: currently, whether a JSON file is an actual mapping file, is determined by whether it is located (directly or indirectly) in a folder called **mappings**.
 
 ### Inline the contents of a body file as a body string
 
-![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 The intentions below are available when:
-- the caret is at the `withBodyFile()` method call identifier (Java), or at any part of the `response.bodyFileName` property in a mapping file (JSON),
-- the specified file path can be resolved to a valid file in any of the `__files` folders within the project (Java),
-or in the `__files` folder under the same root where the current mapping file is located (JSON).
+- **Java DSL**: the caret is at the `withBodyFile()` method call identifier, and the file path can be resolved to a valid file in any of the `__files` folders within the project
+- **JSON DSL**: at any part of the `response.bodyFileName` property, and the file path can be resolved to a valid file in the `__files` folder under the same root where the current mapping file is located
 
 Upon conversion, the JSON string is not pretty-printed or minified, it will contain line breaks, indentation, etc., but it is escaped according to Java/JSON escaping rules.
+
 Also, there is no check for the usage of the source file it was converted from whether it could be removed or not.
 
 **Java**
 
-This intention converts `ResponseDefinitionBuilder#withBodyFile()` calls to `withBody()` calls replacing the referenced file path with the
-contents of the file as the argument body.
+It converts `ResponseDefinitionBuilder#withBodyFile()` calls to `withBody()` calls replacing the referenced file path with the contents of the file as the argument body.
 
 If the file path is referenced via a constant, the constant is kept even if it is not used anywhere else. It is up to the users to decide
 whether they want to keep it or delete it.
@@ -196,8 +318,8 @@ The intention can locate stub files in any of the `__files` folders in the curre
 users can choose which one they want to inline the contents of.
 
 ```java
-from: stubFor(post("/endpoint").willReturn(aResponse().withBodyFile("com/wiremocha/a_response_body.json")));
-to:   stubFor(post("/endpoint").willReturn(aResponse().withBody("{\n  \"name\": \"value\"\n}")));
+from: aResponse().withBodyFile("com/wiremocha/a_response_body.json");
+to:   aResponse().withBody("{\n  \"name\": \"value\"\n}"); //given that a_response_body.json contained that text
 ```
 
 ![ResponseDefinitionBuilder_withBodyFile_to_withBody](assets/convert_ResponseDefinitionBuilder_withBodyFile_to_withBody.gif)
@@ -222,29 +344,24 @@ This one converts `response.bodyFileName` properties to `body` ones replacing th
 
 ### Extract string body into a body file
 
-![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
-This intention makes it possible to extract a response body string into a separate response body file, and replace it with its relative path to the `__files` directory.
+This intention makes it possible to extract a response body string into a separate file, and replace it with its relative path to the `__files` directory.
 
 #### Java
 
 It replaces `ResponseDefinitionBuilder#withBody(<response body string>)` calls with `withBodyFile(<relative path to __files directory>)` ones along with creating
-the new response body file in a target directory.
+the new response body file in the target directory.
 
-The intention is available when the selected method call is `ResponseDefinitionBuilder#withBody(String)`, and there is at least one `__files` directory in the current project.
+It is available when the selected method call is `ResponseDefinitionBuilder#withBody(String)`, and there is at least one `__files` directory in the current project.
 
 **Workflow/extraction process**
 
-- Target `__files` folder selection
-  - if there is a single `__files` folder in the project, let that be the target location of the new file,
-  - if there are multiple `__files` folders in the project, let the user choose one.
-- Sub-folder selection and file creation
-  - if there is no sub-folder in the target `__files` folder, ask for the filename and create the file in the target `__files` directory,
-  - if there is one or more sub-folder, let the user choose from a folder chooser dialog, then ask for the filename, and create the file in the chosen directory with the specified name.
+![response_body_extraction_process](assets/response_body_extraction_process.png)
 
 ```java
-from: stubFor(WireMock.post("/endpoint").willReturn(aResponse().withBody("{\n    \"name\": \"value\"\n}")));
-to:   stubFor(WireMock.post("/endpoint").willReturn(aResponse().withBodyFile("com/wiremocha/a_response_body.json")));
+from: aResponse().withBody("{\n    \"name\": \"value\"\n}");
+to:   aResponse().withBodyFile("com/wiremocha/a_response_body.json");
 
 //The path "com/wiremocha/a_response_body.json" is relative to a __files directory wherever it is located in the project.
 ```
@@ -253,11 +370,9 @@ to:   stubFor(WireMock.post("/endpoint").willReturn(aResponse().withBodyFile("co
 
 The logic is pretty much the same for the JSON DSL with the following differences:
 
-The intention is available when the selected property is `response.body` with a string literal value, in an actual mapping file,
-and there is a `__files` directory under the same root as the mapping file.
-
-In this case the body file is created in the `__files` directory under the same root as the mapping file is located.
-(However, since target sub-folder can be selected, when there is any, there is no restriction to extract the body to any location.)
+- It is available when the selected property is `response.body` with a string literal value, in an actual mapping file, and there is a `__files` directory under the same root as the mapping file.
+- The body file is created in the `__files` directory under the same root as the mapping file is located.
+(However, since a target sub-folder can be selected also, when there is any, there is no restriction to extract the body to any location.)
 
 ```json
 //from:
@@ -271,30 +386,30 @@ In this case the body file is created in the `__files` directory under the same 
 }
 ```
 
-### Base64 encode body string
+### Base64-encode body string
 
-![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 These intentions help replace string literal response bodies with their base64-encoded values. The encoding logic is based on the
 [`GuavaBase64Encoder`](https://github.com/wiremock/wiremock/blob/master/src/main/java/com/github/tomakehurst/wiremock/common/GuavaBase64Encoder.java)
 class what WireMock uses for encoding.
 
-And, since padding can be kept or omitted, there are separate intention for the two modes.
+And, since padding can be kept or omitted, there are separate intentions for the two modes.
 
 **Java**
 
-This intention converts `ResponseDefinitionBuilder#withBody()` calls to `#withBase64Body()` calls replacing the body with its base64-encoded value,
+It converts `ResponseDefinitionBuilder#withBody()` calls to `#withBase64Body()` calls replacing the body with its base64-encoded value,
 and is available when the caret is at the `withBody()` method call identifier.
 
 ```java
-from:              stubFor(post("/").willReturn(aResponse().withBody("{\"aJson\": \"string\"}")));
-to (with padding): stubFor(post("/").willReturn(aResponse().withBase64Body("eyJhSnNvbiI6ICJzdHJpbmcifQ==")));
-to (w/o padding):  stubFor(post("/").willReturn(aResponse().withBase64Body("eyJhSnNvbiI6ICJzdHJpbmcifQ")));
+from:              aResponse().withBody("{\"aJson\": \"string\"}");
+to (with padding): aResponse().withBase64Body("eyJhSnNvbiI6ICJzdHJpbmcifQ==");
+to (w/o padding):  aResponse().withBase64Body("eyJhSnNvbiI6ICJzdHJpbmcifQ");
 ```
 
 **JSON**
 
-This intention converts `response.body` properties to `response.base64Body` ones in JSON mapping files, replacing the body with its base64-encoded value.
+It converts `response.body` properties to `response.base64Body` ones in JSON mapping files, replacing the body with its base64-encoded value.
 It is available when the caret is at the `response.body` property, and the argument value is a string literal.
 
 ```json
@@ -312,7 +427,7 @@ It is available when the caret is at the `response.body` property, and the argum
 
 ### Decode base64-encoded body
 
-![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 These intentions help replace base64-encoded response bodies with their decoded values. The decoding logic is based on the
 [`GuavaBase64Encoder`](https://github.com/wiremock/wiremock/blob/master/src/main/java/com/github/tomakehurst/wiremock/common/GuavaBase64Encoder.java)
@@ -322,17 +437,17 @@ If, upon invoking the intention, the argument cannot be decoded due to being an 
 
 **Java**
 
-This intention converts `ResponseDefinitionBuilder#withBase64Body()` calls to `#withBody()` calls replacing the base64-encoded string with its decoded value,
+It converts `ResponseDefinitionBuilder#withBase64Body()` calls to `#withBody()` calls replacing the base64-encoded string with its decoded value,
 and is available when the caret is at the `withBase64Body()` method call identifier.
 
 ```java
-from: stubFor(post("/").willReturn(aResponse().withBase64Body("eyJhSnNvbiI6ICJzdHJpbmcifQ==")));
-to:   stubFor(post("/").willReturn(aResponse().withBody("{\"aJson\": \"string\"}")));
+from: aResponse().withBase64Body("eyJhSnNvbiI6ICJzdHJpbmcifQ==");
+to:   aResponse().withBody("{\"aJson\": \"string\"}");
 ```
 
 **JSON**
 
-This intention converts `response.base64Body` properties to `response.body` ones in JSON mapping files, replacing the base64-encoded string with its decoded value.
+It converts `response.base64Body` properties to `response.body` ones in JSON mapping files, replacing the base64-encoded string with its decoded value.
 It is available when the caret is at the `response.base64Body` property, and the argument value is a string literal.
 
 ```json
@@ -344,5 +459,57 @@ It is available when the caret is at the `response.base64Body` property, and the
 //to:
 "response": {
   "body": "{\"aJson\": \"string\"}"
+}
+```
+
+### Create mapping file from template
+
+![](https://img.shields.io/badge/action-orange) ![](https://img.shields.io/badge/since-1.0.1-blue)
+
+The **Create WireMock Mapping File** action is available in the Project view context menu on directories called `mappings` and on subdirectories of them.
+It uses File Templates to pre-populate mapping files with predefined contents.
+
+![create_wiremock_mapping_file_context_menu_action](assets/create_wiremock_mapping_file_context_action.png)
+
+You can select from two templates (both editable in <kbd>Settings</kbd> > <kbd>Editor</kbd> > <kbd>File and Code Templates</kbd> > <kbd>Files</kbd>).
+The provided file name must include the *.json* extension too.
+
+![create_wiremock_mapping_options_dialog](assets/create_wiremock_mapping_options_dialog.PNG)
+
+- single request-response mapping
+```json
+{
+  "request": {
+    "method": "GET",
+    "url": "/"
+  },
+  "response": {
+    "status": 200
+  }
+}
+```
+- multiple request-response mappings
+```json
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "url": "/"
+      },
+      "response": {
+        "status": 200
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/"
+      },
+      "response": {
+        "status": 200
+      }
+    }
+  ]
 }
 ```

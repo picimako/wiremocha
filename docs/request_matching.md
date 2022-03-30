@@ -1,8 +1,14 @@
 # Request Matching
 
+- [Before-after matcher folding](#before-after-matcher-folding)
+- [Nonsense matcher combinations](#nonsense-matcher-combinations)
+- [Method calls with too few arguments](#method-calls-with-too-few-arguments)
+- [Converting boolean and() and or() between WireMock and StringValuePattern variants](#converting-boolean-and-and-or-between-wiremock-and-stringvaluepattern-variants)
+- [Replacing date-time "now" calls with convenience method calls](#replacing-date-time-now-calls-with-convenience-method-calls)
+
 ## Before-after matcher folding
 
-![](https://img.shields.io/badge/codefolding-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/codefolding-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 WireMock provides quite a handful of methods for request matching, among which there are some date-time related ones. The following ones are in scope of this code folding:
 
@@ -14,13 +20,11 @@ WireMock provides quite a handful of methods for request matching, among which t
 Chained together with `and()` these code snippets can be quite long, thus this code folding aims to lessen the cognitive load on having to read through the
 whole matcher expression.
 
-In case they use inside a `matchingJsonPath`, `matchingXPath` or `matchesXPathWithSubMatcher` matcher, the path is included in the folded placeholder text,
-otherwise the subject is marked with the `it` word.
+In case they are used inside a `matchingJsonPath`, `matchingXPath` or `matchesXPathWithSubMatcher` matcher, the path is included in the folded placeholder text,
+otherwise the subject is substituted with `it`.
 
-For now, the placeholder creation always takes the text of the after and before expressions, be it string literal, constant, or method call, and not the value
+For now, the placeholder creation always takes the **text** of the after and before expressions, be it string literal, constant, or method call, and not the value
 they potentially evaluate to.
-
-The following foldings are in place:
 
 **Inside matchingJsonPath():**
 ```java
@@ -33,14 +37,14 @@ folding: stubFor(post("/").withRequestBody(matching: [now] < "$.date" < "BEFORE"
 source:  stubFor(post("/").withRequestBody(matchingJsonPath("$.date", beforeNow().and(after("AFTER")))));
 folding: stubFor(post("/").withRequestBody(matching: "AFTER" < "$.date" < [now]));
 
-source:  stubFor(post("/").withRequestBody(matchingJsonPath("$.date", WireMock.and(before("2022-02-02T00:00:00"), after("2020-01-01T00:00:00")))));
+source:  stubFor(post("/").withRequestBody(matchingJsonPath("$.date", and(before("2022-02-02T00:00:00"), after("2020-01-01T00:00:00")))));
 folding: stubFor(post("/").withRequestBody(matching: "2020-01-01T00:00:00" < "$.date" < "2022-02-02T00:00:00"));
 ```
 
 **Referencing constants:**
 ```java
-private static final String AFTER_DATE="AFTER_DATE_CONST";
-private static final String BEFORE_DATE="BEFORE_DATE_CONST";
+private static final String AFTER_DATE = "after_date_value";
+private static final String BEFORE_DATE = "before_date_value";
 
 source:  stubFor(post("/").withRequestBody(matchingJsonPath("$.date", before(BEFORE_DATE).and(after(AFTER_DATE)))));
 folding: stubFor(post("/").withRequestBody(matching: AFTER_DATE < "$.date" < BEFORE_DATE));
@@ -62,14 +66,14 @@ Individual `before(...)` and `after(...)` calls are not folded because the save 
 
 ## Nonsense matcher combinations
 
-![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 There are certain matcher combinations that either don't make sense or contradict each other, so this inspection reports those cases.
 
 For now, date-time specific matchers linked together with `and()` are supported. For example:
 
 ```java
-stubFor(post("/").withRequestBody(matchingJsonPath("$.date", isNow().and(beforeNow()))));
+isNow().and(beforeNow())
 ```
 
 The full list of combinations that are reported (the operands are applicable in the reverse order as well):
@@ -85,7 +89,7 @@ The full list of combinations that are reported (the operands are applicable in 
 
 ## Method calls with too few arguments
 
-![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 There are methods that require a minimum number of arguments to be passed. This inspection reports calls to them with a fewer number of arguments required.
 
@@ -96,11 +100,10 @@ There are methods that require a minimum number of arguments to be passed. This 
 
 ## Converting boolean and() and or() between WireMock and StringValuePattern variants
 
-![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/intention-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 `StringValuePattern` type matchers can be combined into complex boolean matchers using `and()` and `or()`,
-and since there are static methods `WireMock.and()/or()` and instance methods `StringValuePattern.and()/or()`, it is possible to switch between them,
-essentially converting between the two forms.
+and since there are static methods `WireMock.and()/or()` and instance methods `StringValuePattern.and()/or()`, it is possible to switch between the two forms.
 
 From the fluent `x.and(y)`/`x.or(y)` forms the conversion is possible only when all operands are combined with `and()` or `or()`, respectively.
 
@@ -133,9 +136,9 @@ Note: if you want to flip the operands of a fluent call, there is already an int
 
 ## Replacing date-time "now" calls with convenience method calls
 
-![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
-Since date-time matchers (`after`, `before`, `equalToDateTime`) can accept WireMock's **now offset expression** format, the aforementioned methods
+Since date-time matchers (`after()`, `before()`, `equalToDateTime()`) can accept WireMock's **now offset expression** format, the aforementioned methods
 can be called with the String value `"now"` for which there are non-parametrized convenience methods.
 
 | From                     | To                     |
