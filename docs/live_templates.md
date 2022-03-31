@@ -2,7 +2,7 @@
 
 ## Between date-time "matcher"
 
-![](https://img.shields.io/badge/livetemplate-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/livetemplate-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 Since no 'between' date-time matcher exists in WireMock, this live template helps to create and insert the `before().and(after())` code snippet.
 

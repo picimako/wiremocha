@@ -6,15 +6,13 @@ The features here are all related to how `WireMockConfiguration` instances are s
 
 ### caKeystoreType() argument completion
 
-![](https://img.shields.io/badge/codecompletion-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/codecompletion-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 `WireMockConfiguration#caKeystoreType()` under the hood uses this type to create `java.security.KeyStore`s via various means.
 
-This code completion supplies the possible keystore type values upon invoking the Ctrl+Space menu. The items are placed near the top
-of the suggestion list (weighing them to the absolute top is not perfect yet).
-
-The suggested values are based on the list provided by the [Java Security Standard Algorithm Names - KeyStore types](https://docs.oracle.com/en/java/javase/15/docs/specs/security/standard-names.html#keystore-types)
-documentation.
+This code completion supplies the possible keystore type values upon invoking the code completion list.
+The items (that are based on the list provided by the [Java Security Standard Algorithm Names - KeyStore types](https://docs.oracle.com/en/java/javase/15/docs/specs/security/standard-names.html#keystore-types)
+documentation) are placed near the top of the list (weighing them to the absolute top is not perfect yet).
 
 ![ca_keystore_type_code_completion](assets/ca_keystore_type_code_completion.png)
 
@@ -25,7 +23,7 @@ Then, when configuring `WireMockConfiguration` with said extensions, these are t
 
 ### extensions() code completion
 
-![](https://img.shields.io/badge/codecompletion-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/codecompletion-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 To simplify code completion, only classes that satisfy the following criteria are shown when completing String arguments in `extensions()`:
 - implement `com.github.tomakehurst.wiremock.extension.Extension`
@@ -36,7 +34,7 @@ To simplify code completion, only classes that satisfy the following criteria ar
 
 ### extensions() criteria inspections
 
-![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-0.1.0-blue)
+![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
 String arguments of `extensions()` are validated and reported if they do not implement the aforementioned `Extensions` interface.
 
