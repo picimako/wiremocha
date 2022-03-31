@@ -12,7 +12,8 @@ It offers various tools to generate and validate WireMock related test code, and
 
 ## Purchase license
 
-Since this plugin is available only via a paid license, you can head over to the JetBrains Marketplace to get your hands on one. You can find more information including prices and license types/schemes there.
+Since this plugin is available only via a paid license, you can head over to the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/18860-wiremocha) to get your hands on one.
+You can find more information including prices and license types/schemes there.
 
 ## Dependencies
 
