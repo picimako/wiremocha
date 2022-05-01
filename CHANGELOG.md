@@ -1,5 +1,13 @@
 # WireMocha Changelog
 
+## 1.0.2
+
+### Added
+
+- [11][https://github.com/picimako/wiremocha/issues/11], [12][https://github.com/picimako/wiremocha/issues/12]:
+  Extended inspection to detect duplicate request header and query param definitions in the Java DSL,
+  within `com.github.tomakehurst.wiremock.client.MappingBuilder` and `com.github.tomakehurst.wiremock.matching.RequestPatternBuilder` call chains.
+
 ## 1.0.1
 
 ### Added
