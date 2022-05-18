@@ -1,5 +1,24 @@
 # WireMocha Changelog
 
+## 1.0.2
+
+### Added
+
+- [11](https://github.com/picimako/wiremocha/issues/11), [12](https://github.com/picimako/wiremocha/issues/12):
+  Extended inspection to detect duplicate request header and query param definitions in the Java DSL,
+  within `com.github.tomakehurst.wiremock.client.MappingBuilder` and `com.github.tomakehurst.wiremock.matching.RequestPatternBuilder` call chains.
+- [1](https://github.com/picimako/wiremocha/issues/1): Added an inspection that reports arguments of various method calls in builder classes
+  that are equal to the property values that those methods configure.
+- [4](https://github.com/picimako/wiremocha/issues/4): Extended inspection to detect `.withStatus()` response definition calls in chains in which 
+  the first call already defines the status code. For example: `WireMock.ok().withStatus(301)`.
+- [13](https://github.com/picimako/wiremocha/issues/13): Added an inspection that can validate various aspects of WireMock's custom Handlebars helpers. 
+  For the full list of checks please check out the [Handlebars Helpers](/docs/handlebars_helpers.md) document.
+- [14](https://github.com/picimako/wiremocha/issues/14): Added references to Handlebars helper names, so one can navigate to the implementation
+  of custom helpers provided by WireMock, via Ctrl+Click. NOTE: only WireMock's helpers are supported, and they are not yet supported in subexpressions.
+- [16](https://github.com/picimako/wiremocha/issues/16): Added code completion to Handlebars helper names, hashes and string literal hash values.
+- [19](https://github.com/picimako/wiremocha/issues/19): Reworked Handlebars language injection, so that multiple Handlebars fragments are injected separately into the same
+  string literal. This issue also adds support to inject Handlebars into string literals anywhere within the `response.headers` and `response.jsonBody` properties in the JSON DSL.
+
 ## 1.0.1
 
 ### Added

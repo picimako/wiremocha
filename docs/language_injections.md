@@ -5,13 +5,17 @@ bundled configuration.
 
 In general, injections require the **IntelliLang** plugin to be installed (bundled by default), while XPath injections require the **XPathView + XSLT** plugin,
 and Handlebars injections require the **Handlebars/Mustache** plugin. All of these plugins are optional, but in case any of them is disabled or not installed,
-some functionality of WireMocha won't be available.
+the corresponding functionality of WireMocha won't be available.
 
-As for the Handlebars injections: they don't provide advanced code insight like code completion, inspections, etc., for code within the injected fragments.
+**Notes:**
+- Injecting multiple separate Handlebars fragments into the same literal is available is since v1.0.2.
+- Known issue: if a string literal contains a raw block (`{{{{`), although Handlebars is injected into it,
+sequent Handlebars fragments in the same literal are highlighted as generic expressions and not actual helpers, and lack features like code completion.
+This happens via the IDE's own language injection feature as well.
 
 ## Java
 
-These are all enabled by default, and except the Handlebars injections, they can be disabled individually under <kbd>IDE Settings</kbd> > <kbd>Editor</kbd> > <kbd>Language Injections</kbd>.
+These are all enabled by default, except Handlebars injections, and can be disabled individually under <kbd>IDE Settings</kbd> > <kbd>Editor</kbd> > <kbd>Language Injections</kbd>.
 They are by default available since v1.0.0, unless stated otherwise.
 
 | Category                       | Location                                                                                                                                              | Injected Language | Comment                                            |
@@ -30,13 +34,13 @@ They are by default available since v1.0.0, unless stated otherwise.
 
 Injections into JSON mapping files are generally available since v1.0.1.
 
-At the moment, the injection into these properties cannot be disabled. 
+At the moment, the injection into these properties cannot be disabled.
 
-| Property                                                                                                                                     | Injected Language |
-|----------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
+| Property                                                                                                                                         | Injected Language |
+|--------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
 | `matches`<br/>`doesNotMatch`<br/>`urlPattern`<br/>`urlPathPattern`<br/>`placeholderOpeningDelimiterRegex`<br/>`placeholderClosingDelimiterRegex` | RegExp            |
-| `equalToJson`                                                                                                                                | JSON              |
-| `equalToXml`                                                                                                                                 | XML               |
-| `matchesJsonPath`<br/>`matchesJsonPath.expression`                                                                                                | JSONPath          |
-| `matchesXPath`<br/>`matchesXPath.expression`                                                                                                      | XPath             |
-| `body`<br/>`bodyFileName`<br/>`base64Body`<br/>`proxyBaseUrl`                                                                                | Handlebars        |
+| `equalToJson`                                                                                                                                    | JSON              |
+| `equalToXml`                                                                                                                                     | XML               |
+| `matchesJsonPath`<br/>`matchesJsonPath.expression`                                                                                               | JSONPath          |
+| `matchesXPath`<br/>`matchesXPath.expression`                                                                                                     | XPath             |
+| `body`<br/>`bodyFileName`<br/>`base64Body`<br/>`proxyBaseUrl`<br/>literals within `response.headers`                                             | Handlebars        |

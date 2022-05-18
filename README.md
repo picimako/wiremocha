@@ -47,3 +47,5 @@ Or, you can find more detailed documentation below:
 - [Stubbing](docs/stubbing.md)
 - [JUnit Rules and Extensions](docs/junit_rules_and_extensions.md)
 - [Language Injections](docs/language_injections.md)
+  - [Handlebars helpers](docs/handlebars_helpers.md)
+- [Miscellaneous](docs/misc.md)
