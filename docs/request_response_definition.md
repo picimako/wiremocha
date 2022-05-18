@@ -76,7 +76,7 @@ verify(getRequestedFor(urlEqualTo("/")).withHeader("Accept-Language", equalTo("H
 verify(getRequestedFor(urlEqualTo("/")).withHeader("Accept-Language", equalTo("HU")).withPort(8080));
 ```
 
-### withQueryParam
+### withQueryParam()
 
 ![](https://img.shields.io/badge/since-1.0.2-blue)
 
@@ -149,7 +149,7 @@ aResponse()
 
 This inspection reports duplicate configuration in `response` properties in mapping files.
 
-### \*Body*
+### \*Body*()
 
 ![](https://img.shields.io/badge/since-1.0.1-blue)
 
@@ -191,4 +191,28 @@ The related quick fix removes duplicate properties, keeping the property that th
     "body": "{\"aJson\": \"string\"}"
   }
 }
+```
+
+### withStatus()
+
+![](https://img.shields.io/badge/since-1.0.2-blue)
+
+This part of the inspection detects `withStatus()` calls that are specified in call chains in which
+the first call in the chain already configures the status code behind the scenes.
+
+It also provides a quick fix to remove the redundant `withStatus()` call.
+
+**Examples:**
+
+```java
+//Chains started with WireMock.aResponse() are not analyzed,
+// since this is probably the most common way of starting a response definition,
+// regardless there is a default status value, 200, set when calling only aResponse(). 
+stubFor(WireMock.post("/").willReturn(aResponse()));
+stubFor(WireMock.post("/").willReturn(aResponse().withStatus(301)));
+
+//The following ones are all reported (the list is not comprehensive):
+stubFor(WireMock.get("/").willReturn(WireMock.ok().withStatus(200)));
+stubFor(WireMock.get("/").willReturn(WireMock.okForContentType("application/json", "{}").withHeader("Location", "location").withStatus(500)));
+stubFor(WireMock.get("/").willReturn(WireMock.status(301).withStatus(400).withHeader("Location", "location")));
 ```
