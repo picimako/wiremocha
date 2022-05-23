@@ -4,16 +4,16 @@ This document details the various integrations that are added to WireMock's cust
 
 ## Validation of Handlebars helpers
 
-![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.2-blue)
+![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.2-blue) ![](https://img.shields.io/badge/quickfixes:since-1.0.3-blue)
 
 Performs validation on custom Handlebars helpers provided by WireMock.
 
 Currently, it performs the following checks:
 - Minimum and maximum number of parameters in simple mustaches, sub-expressions and block helpers.
-- Whether a hash name is supported by the given helper, or if there is any hash supported by a helper at all.
+- Whether a hash name is supported by the given helper, or if there is any hash supported by a helper at all. **Quick fix**: to remove the unsupported hash, or all hashes, respectively.
 - Incorrect hash values.
-- Default hash values.
-- Undefined mandatory hashes.
+- Default hash values. **Quick fix**: to remove the hash.
+- Undefined mandatory hashes. **Quick fix**: to add missing mandatory hashes. 
 - Whether a helper is supposed to be used as a block helper.
 
 These rules are based both on WireMock's [Response Templating](https://wiremock.org/docs/response-templating/) documentation and on the actual implementation of those helpers.

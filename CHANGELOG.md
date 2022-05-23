@@ -1,5 +1,12 @@
 # WireMocha Changelog
 
+## 1.0.3
+
+### Added
+
+- [20](https://github.com/picimako/wiremocha/issues/20): Added quick fixes for Handlebars inspection to remove unsupported parameters and hashes,
+  remove hashes specified with their default value, and to add missing mandatory hashes.
+
 ## 1.0.2
 
 ### Added
