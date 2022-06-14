@@ -4,8 +4,19 @@
 
 ### Added
 
+- Added support for IntelliJ 2022.2.
+- [6](https://github.com/picimako/wiremocha/issues/6): Added JSON schema for mapping files, which in turn provides validation and auto-completion
+  of properties and values.
+- [18](https://github.com/picimako/wiremocha/issues/18): Added extra validation for some helpers:
+  reports `pickRandom` with a single-item collection, and reports `math` if an unsupported operation is specified
 - [20](https://github.com/picimako/wiremocha/issues/20): Added quick fixes for Handlebars inspection to remove unsupported parameters and hashes,
-  remove hashes specified with their default value, and to add missing mandatory hashes.
+  remove hashes specified with their default values, and to add missing mandatory hashes.
+- [21](https://github.com/picimako/wiremocha/issues/21): Added code completion for the request attributes based on
+  the [WireMock request model](https://wiremock.org/docs/response-templating/#the-request-model).
+
+### Changed
+
+- Remove **WireMocha** prefix from inspection messages.
 
 ## 1.0.2
 

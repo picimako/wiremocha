@@ -5,6 +5,7 @@ This document details the various integrations that are added to WireMock's cust
 ## Validation of Handlebars helpers
 
 ![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.2-blue) ![](https://img.shields.io/badge/quickfixes:since-1.0.3-blue)
+![](https://img.shields.io/badge/extravalidations:since-1.0.3-blue)
 
 Performs validation on custom Handlebars helpers provided by WireMock.
 
@@ -46,6 +47,10 @@ These rules are based both on WireMock's [Response Templating](https://wiremock.
 | [math]          | 3           |                                                                 | -                                                                                                                             | -                    |
 | [systemValue]   | 0           |                                                                 | *type*<br/>- default value: 'ENVIRONMENT',<br/>- allowed values: 'ENVIRONMENT', 'PROPERTY'<br/>**key**<br/>- non-empty string | -                    |
 
+**Other extra validations:**
+- `pickRandom` is reported when only a single item is specified
+- `math` is reported if an unsupported operation is specified
+
 **Notes:**
 - The number of params include the so-called `context` parameter too.
 - Hash names in italics are optional ones, while hashes in bold are mandatory ones.
@@ -84,6 +89,7 @@ Code completion is available for WireMock's custom Handlebars helpers:
 - **helper names**
 - **hash names** of helpers that support hashes
 - **string literal hash values** where a list of applicable values can be determined
+- **request attributes** based on the [WireMock request model](https://wiremock.org/docs/response-templating/#the-request-model)
 
 Helper name items also include short descriptions of them about their purposes:
 
@@ -100,6 +106,10 @@ Hash names include the fact if they are mandatory or optional:
 Hash value items doesn't have additional contextual information:
 
 ![](assets/handlebars_helper_hash_value_completion.png)
+
+Request attributes:
+
+![](assets/handlebars_request_attributes_completion.png)
 
 NOTE: Completion of non-string literal hash values and simple parameters are not supported at the moment.
 
