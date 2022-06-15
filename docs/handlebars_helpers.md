@@ -4,16 +4,17 @@ This document details the various integrations that are added to WireMock's cust
 
 ## Validation of Handlebars helpers
 
-![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.2-blue)
+![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.2-blue) ![](https://img.shields.io/badge/quickfixes:since-1.0.3-blue)
+![](https://img.shields.io/badge/extravalidations:since-1.0.3-blue)
 
 Performs validation on custom Handlebars helpers provided by WireMock.
 
 Currently, it performs the following checks:
 - Minimum and maximum number of parameters in simple mustaches, sub-expressions and block helpers.
-- Whether a hash name is supported by the given helper, or if there is any hash supported by a helper at all.
+- Whether a hash name is supported by the given helper, or if there is any hash supported by a helper at all. **Quick fix**: to remove the unsupported hash, or all hashes, respectively.
 - Incorrect hash values.
-- Default hash values.
-- Undefined mandatory hashes.
+- Default hash values. **Quick fix**: to remove the hash.
+- Undefined mandatory hashes. **Quick fix**: to add missing mandatory hashes. 
 - Whether a helper is supposed to be used as a block helper.
 
 These rules are based both on WireMock's [Response Templating](https://wiremock.org/docs/response-templating/) documentation and on the actual implementation of those helpers.
@@ -45,6 +46,10 @@ These rules are based both on WireMock's [Response Templating](https://wiremock.
 | [contains]      | 2           |                                                                 | -                                                                                                                             | Yes                  |
 | [math]          | 3           |                                                                 | -                                                                                                                             | -                    |
 | [systemValue]   | 0           |                                                                 | *type*<br/>- default value: 'ENVIRONMENT',<br/>- allowed values: 'ENVIRONMENT', 'PROPERTY'<br/>**key**<br/>- non-empty string | -                    |
+
+**Other extra validations:**
+- `pickRandom` is reported when only a single item is specified
+- `math` is reported if an unsupported operation is specified
 
 **Notes:**
 - The number of params include the so-called `context` parameter too.
@@ -84,6 +89,7 @@ Code completion is available for WireMock's custom Handlebars helpers:
 - **helper names**
 - **hash names** of helpers that support hashes
 - **string literal hash values** where a list of applicable values can be determined
+- **request attributes** based on the [WireMock request model](https://wiremock.org/docs/response-templating/#the-request-model)
 
 Helper name items also include short descriptions of them about their purposes:
 
@@ -100,6 +106,10 @@ Hash names include the fact if they are mandatory or optional:
 Hash value items doesn't have additional contextual information:
 
 ![](assets/handlebars_helper_hash_value_completion.png)
+
+Request attributes:
+
+![](assets/handlebars_request_attributes_completion.png)
 
 NOTE: Completion of non-string literal hash values and simple parameters are not supported at the moment.
 
