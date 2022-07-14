@@ -8,7 +8,7 @@
   - [Extract string body into a body file](#extract-string-body-into-a-body-file)
   - [Base64-encode body string](#base64-encode-body-string)
   - [Decode base64-encoded body](#decode-base64-encoded-body)
-- [Create mapping file from template](#create-mapping-file-from-template)
+- [Scenario generation](#scenario-generation)
 
 ## Simplify response related stubbing
 
@@ -331,3 +331,40 @@ It is available when the caret is at the `response.base64Body` property, and the
   "body": "{\"aJson\": \"string\"}"
 }
 ```
+
+## Scenario generation
+
+![](https://img.shields.io/badge/toolwindow-orange) ![](https://img.shields.io/badge/since-1.0.4-blue)
+
+The WireMock tool window can be found at the bottom of the IDE frame, and consists of one tab, called **Generate Scenario**.
+
+The aim of this tool is to generate *skeleton* Java and JSON stub mappings that are tied to a specific scenario.
+It may help users to concentrate on modeling the scenario states first, without having to deal with the coding aspect in that state
+of the implementation.
+
+### Scenario definition
+
+On the left side of the tool, you can specify a scenario name that is being modeled, and stub definitions with the following attributes/columns 
+**Method**, **URL**, **Current State** and **New State**. Response code is not customizable at the moment.
+
+On the right side, the code is automatically generated and updated upon modifications on the left side.
+
+Each row of the table reads like this: Sending a **Method**-type request to **URL** in **Current State** will return some response, and optionally move the scenario to **New State**.
+
+There is no validation on any of the fields, but for convenience, if the **Current State** is a case-insensitive variant of `Scenario.STARTED` or `STARTED`,
+then the following values are generated into the code:
+- Java: `Scenario.STARTED`
+- JSON: `Started`
+
+Note: the Method dropdowns are editable when double-clicked. 
+
+### Toolbar actions
+
+In addition to the standard Add, Remove and Move Up/Down actions, the following extra action are available:
+- **Add Stub Definition with Started State**: adds a new table row whose Current State is set to `STARTED`. 
+- **Transition from Previous New State**: adds a new table row whose Current State is the New State of the selected row.
+- **Duplicate Row(s)**: duplicates the selected rows. The new rows are added to the end of the table.
+
+**Example** (based on the [WireMock Stateful Behaviour](https://wiremock.org/docs/stateful-behaviour/) documentation):
+
+![generate_scenario_tool_window](assets/generate_scenario_based_stub_mappings.gif)
