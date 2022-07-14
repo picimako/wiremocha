@@ -14,7 +14,7 @@ It offers various tools to generate and validate WireMock related test code, and
 
 Since this plugin is available only via a paid license, you can head over to the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/18860-wiremocha)
 to get your hands on one. You can find more information including prices and license types/schemes there,
-including a 30-day trial period.
+including a **30-day trial period**.
 
 ## Dependencies
 
@@ -24,6 +24,7 @@ The WireMocha plugin depends on a few specific plugins whose absence alters the 
 - **IntelliLang** (optional): various language injections (see [Language Injections](docs/language_injections.md))
 - [**XPathView+XSLT**](https://plugins.jetbrains.com/plugin/12478-xpathview--xslt) (optional): XPath specific language injections
 - [**Handlebars/Mustache**](https://plugins.jetbrains.com/plugin/6884-handlebars-mustache) (optional): Handlebars specific language injections
+- [**HTTP Client**](https://plugins.jetbrains.com/plugin/13121-http-client) (optional, only in Ultimate): WireMock Admin API specific Live templates 
 
 ## Supported IDEs
 
@@ -55,3 +56,8 @@ Or, you can find more detailed documentation below:
 - [Configuration](docs/configuration.md)
 - [Live Templates](docs/live_templates.md)
 - [Miscellaneous](docs/misc.md)
+
+### Other
+
+It is worth noting that IntelliJ IDEA also provides some Spring related features for WireMock.
+See [IntelliJ IDEA 2022.2 EAP 5: Support for Spring 6...](https://blog.jetbrains.com/idea/2022/06/intellij-idea-2022-2-eap-5/)

@@ -1,5 +1,13 @@
 # WireMocha Changelog
 
+## 1.0.4
+
+### Added
+- [24](https://github.com/picimako/wiremocha/issues/24): Added live templates for requests in the WireMock Admin API to be used
+  with the [HTTP Client plugin](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html).
+- [25](https://github.com/picimako/wiremocha/issues/25): Added a WireMock tool window in which scenarios with their states can
+  be modeled, and skeleton stub mappings can be generated from them.
+
 ## 1.0.3
 
 ### Added
