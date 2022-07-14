@@ -1,5 +1,11 @@
 # WireMocha Changelog
 
+## 1.0.4
+
+### Added
+- [24](https://github.com/picimako/wiremocha/issues/24): Added live templates for requests in the WireMock Admin API to be used
+  with the [HTTP Client plugin](https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html).
+
 ## 1.0.3
 
 ### Added
