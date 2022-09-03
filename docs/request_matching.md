@@ -1,10 +1,29 @@
 # Request Matching
 
-- [Before-after matcher folding](#before-after-matcher-folding)
-- [Nonsense matcher combinations](#nonsense-matcher-combinations)
-- [Method calls with too few arguments](#method-calls-with-too-few-arguments)
-- [Converting boolean and() and or() between WireMock and StringValuePattern variants](#converting-boolean-and-and-or-between-wiremock-and-stringvaluepattern-variants)
-- [Replacing date-time "now" calls with convenience method calls](#replacing-date-time-now-calls-with-convenience-method-calls)
+<!-- TOC -->
+* [Syntax highlighting for JsonUnit placeholders](#syntax-highlighting-for-jsonunit-placeholders)
+* [Before-after matcher folding](#before-after-matcher-folding)
+* [Nonsense matcher combinations](#nonsense-matcher-combinations)
+* [Method calls with too few arguments](#method-calls-with-too-few-arguments)
+* [Converting boolean and() and or() between WireMock and StringValuePattern variants](#converting-boolean-and-and-or-between-wiremock-and-stringvaluepattern-variants)
+* [Replacing date-time "now" calls with convenience method calls](#replacing-date-time-now-calls-with-convenience-method-calls)
+<!-- TOC -->
+
+## Syntax highlighting for JsonUnit placeholders
+
+![](https://img.shields.io/badge/syntax-orange) ![](https://img.shields.io/badge/since-1.0.5-blue)
+
+Since, in WireMock
+> JSON equality matching is based on [JsonUnit](https://github.com/lukas-krecan/JsonUnit) and therefore supports placeholders.
+
+(see also the [Reqeust matching](https://wiremock.org/docs/request-matching/#placeholders) document), highlighting is added
+for these placeholders in JSON stub mapping files.
+
+![json_unit_placeholder_highlighting](assets/json_unit_placeholder_highlighting.PNG)
+
+Notes:
+- This feature doesn't include any kind of language support for JsonUnit placeholders. It is not really the scope of this plugin.
+- This functionality is not yet added for the Java DSL.
 
 ## Before-after matcher folding
 
