@@ -13,8 +13,7 @@ It offers various tools to generate and validate WireMock related test code, and
 ## Purchase license
 
 Since this plugin is available only via a paid license, you can head over to the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/18860-wiremocha)
-to get your hands on one. You can find more information including prices and license types/schemes there,
-including a **30-day trial period**.
+to get your hands on one. You can find more information about pricing and license types/schemes there, including a **30-day trial period**.
 
 ## Dependencies
 
@@ -51,7 +50,8 @@ Or, you can find more detailed documentation below:
 - [Language Injections](docs/language_injections.md)
 - [Response templating](docs/response_templating.md)
   - [Handlebars helpers](docs/handlebars_helpers.md)
-- [Request Matching](docs/request_matching.md)
+- [Request matching](docs/request_matching.md)
+- [Request and response definitions](docs/request_response_definition.md)
 - [Stubbing](docs/stubbing.md)
 - [Configuration](docs/configuration.md)
 - [Live Templates](docs/live_templates.md)
