@@ -1,14 +1,18 @@
 # Stubbing
 
-- [Simplify response related stubbing](#simplify-response-related-stubbing)
-- [Incorrect configuration in response definitions](#incorrect-configuration-in-response-definitions)
-- [Gutter icon for response definition body file paths](#gutter-icon-for-response-definition-body-file-paths)
-- [Convert between various response body definition modes](#convert-between-various-response-body-definition-modes)
-  - [Inline the contents of a body file as a body string](#inline-the-contents-of-a-body-file-as-a-body-string)
-  - [Extract string body into a body file](#extract-string-body-into-a-body-file)
-  - [Base64-encode body string](#base64-encode-body-string)
-  - [Decode base64-encoded body](#decode-base64-encoded-body)
-- [Scenario generation](#scenario-generation)
+<!-- TOC -->
+* [Simplify response related stubbing](#simplify-response-related-stubbing)
+* [Incorrect configuration in response definitions](#incorrect-configuration-in-response-definitions)
+* [Response definition body file paths](#response-definition-body-file-paths)
+  * [Gutter icons](#gutter-icons)
+  * [References](#references)
+* [Convert between various response body definition modes](#convert-between-various-response-body-definition-modes)
+  * [Inline the contents of a body file as a body string](#inline-the-contents-of-a-body-file-as-a-body-string)
+  * [Extract string body into a body file](#extract-string-body-into-a-body-file)
+  * [Base64-encode body string](#base64-encode-body-string)
+  * [Decode base64-encoded body](#decode-base64-encoded-body)
+* [Scenario generation](#scenario-generation)
+<!-- TOC -->
 
 ## Simplify response related stubbing
 
@@ -136,7 +140,9 @@ public class ATest {
 }
 ```
 
-## Gutter icon for response definition body file paths
+## Response definition body file paths
+
+### Gutter icons
 
 ![](https://img.shields.io/badge/linemarker-orange) ![](https://img.shields.io/badge/since-1.0.0-blue)
 
@@ -147,17 +153,27 @@ In JSON mappings the `response.bodyFileName` property behaves the same.
 
 To mark the location of such files, a line marker/gutter icon is added if the path can be resolved, to which the file reference is always added.
 
-### Java
+#### Java
 
 The icon is displayed if the path can be resolved to any of the `__files` directories in the project, if there are multiple.
 
 ![response_definition_with_body_file_gutter_icon_java](assets/response_definition_with_body_file_gutter_icon_java.png)
 
-### JSON
+#### JSON
 
 The icon is displayed if the path can be resolved to the `_files` directory sibling of the mapping file's parent (at any level) `mappings` directory.
 
 ![response_definition_with_body_file_gutter_icon_json](assets/response_definition_with_body_file_gutter_icon_json.PNG)
+
+### References
+
+![](https://img.shields.io/badge/reference-orange) ![](https://img.shields.io/badge/since-1.0.5-blue)
+
+Similarly to the gutter icons detailed in the previous section, references are also provided for the file paths (both in JSON and Java DSLs),
+so that user can navigate to them via Ctrl+Click and similar actions.
+
+Such references also make it possible for the response body files to show up in usage based searches, for instance when removing the response body file,
+but its path is still references in mapping files, or test code.
 
 ## Convert between various response body definition modes
 
