@@ -1,5 +1,20 @@
 # WireMocha Changelog
 
+## 1.0.5
+
+### Added
+- [28](https://github.com/picimako/wiremocha/issues/28): Added logic to detect duplicate request url definitions (`url`, `urlPattern`, `urlPath`, `urlPathPattern`) in mapping.json files.
+- [29](https://github.com/picimako/wiremocha/issues/29): Added references to `response.bodyFileName` property values and
+  `withBodyFile()` method call arguments, so that these file path references now show up in usage based searches.
+- [30](https://github.com/picimako/wiremocha/issues/30): Added simple syntax highlighting for [JsonUnit placeholders](https://github.com/lukas-krecan/JsonUnit#typeplc)
+  in JSON stub mapping files.
+- [31](https://github.com/picimako/wiremocha/issues/31): Added a toolbar action to the Project View to show basic information of
+  JSON stub mapping files. This information is displayed on the appropriate file nodes after the file name.
+
+### Changed
+- Code optimizations under the hood, in various areas, including stub simplification inspections.
+- Renamed the stub mapping JSON schema to *WireMock Stub Mapping* to give it a more meaningful name.
+
 ## 1.0.4
 
 ### Added
