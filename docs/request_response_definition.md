@@ -1,9 +1,11 @@
 # Request and response definitions
 
-- [Duplicate configuration in response definitions (Java DSL)](#duplicate-configuration-in-request-and-response-definitions-java-dsl)
-- [Duplicate configuration in response definitions (JSON DSL)](#duplicate-configuration-in-response-definitions-json-dsl)
+<!-- TOC -->
+* [Duplicate configuration (Java DSL)](#duplicate-configuration-java-dsl)
+* [Duplicate configuration (JSON DSL)](#duplicate-configuration-json-dsl)
+<!-- TOC -->
 
-## Duplicate configuration in request and response definitions (Java DSL)
+## Duplicate configuration (Java DSL)
 
 ![](https://img.shields.io/badge/inspection-orange)
 
@@ -143,33 +145,46 @@ aResponse()
     .withFixedDelay(200);
 ```
 
-## Duplicate configuration in response definitions (JSON DSL)
+### withStatus()
+
+![](https://img.shields.io/badge/since-1.0.2-blue)
+
+This part of the inspection detects `withStatus()` calls that are specified in call chains in which
+the first call in the chain already configures the status code behind the scenes.
+
+It also provides a quick fix to remove the redundant `withStatus()` call.
+
+**Examples:**
+
+```java
+//Chains started with WireMock.aResponse() are not analyzed,
+// since this is probably the most common way of starting a response definition,
+// regardless there is a default status value, 200, set when calling only aResponse(). 
+stubFor(WireMock.post("/").willReturn(aResponse()));
+stubFor(WireMock.post("/").willReturn(aResponse().withStatus(301)));
+
+//The following ones are all reported (the list is not comprehensive):
+stubFor(WireMock.get("/").willReturn(WireMock.ok().withStatus(200)));
+stubFor(WireMock.get("/").willReturn(WireMock.okForContentType("application/json", "{}").withHeader("Location", "location").withStatus(500)));
+stubFor(WireMock.get("/").willReturn(WireMock.status(301).withStatus(400).withHeader("Location", "location")));
+```
+
+## Duplicate configuration (JSON DSL)
 
 ![](https://img.shields.io/badge/inspection-orange)
 
-This inspection reports duplicate configuration in `response` properties in mapping files.
+This inspection reports duplicate configuration in `response` and `request` properties in mapping files.
 
-### \*Body*()
+| Detected property type | Support property names                           | Since                                              | Comments                                                                                                                                                     |
+|------------------------|--------------------------------------------------|----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| body                   | `body`, `base64Body`, `bodyFileName`, `jsonBody` | ![](https://img.shields.io/badge/since-1.0.1-blue) | According to the WireMock JSON schemas, in terms of the request url definitions: *"Only one of url, urlPattern, urlPath or urlPathPattern may be specified"* |
+| url                    | `url`, `urlPattern`, `urlPath`, `urlPathPattern` | ![](https://img.shields.io/badge/since-1.0.5-blue) |                                                                                                                                                              |
 
-![](https://img.shields.io/badge/since-1.0.1-blue)
-
-This inspection is the same as the Java DSL for reporting duplicate response body definitions.
-
-It supports the following response body definition properties: `body`, `base64Body`, `bodyFileName`, `jsonBody`
 Regardless of if multiple of the same property, or different properties are specified, they are all reported and highlighted if duplicates are found.
 
-```json
-{
-  "request": { ... },
-  "response": {
-    "status": 200,
-    "bodyFileName": "a/response_body.json",
-    "body": "{\"aJson\": \"string\"}"
-  }
-}
-```
+Also, the related quick fix removes duplicate properties, keeping the property that the user invokes the quick fix on:
 
-The related quick fix removes duplicate properties, keeping the property that the user invokes the quick fix on:
+**Example - body:**
 
 ```json
 //From (where 'body' is selected to be kept):
@@ -193,26 +208,26 @@ The related quick fix removes duplicate properties, keeping the property that th
 }
 ```
 
-### withStatus()
+**Example - url:**
 
-![](https://img.shields.io/badge/since-1.0.2-blue)
+```json
+//From (where 'urlPattern' is selected to be kept):
+{
+  "request": {
+    "method": "GET",
+    "url": "/url",
+    "urlPattern": "/url-pa.*ern"
+  },
+  "response": { ... }
+}
 
-This part of the inspection detects `withStatus()` calls that are specified in call chains in which
-the first call in the chain already configures the status code behind the scenes.
-
-It also provides a quick fix to remove the redundant `withStatus()` call.
-
-**Examples:**
-
-```java
-//Chains started with WireMock.aResponse() are not analyzed,
-// since this is probably the most common way of starting a response definition,
-// regardless there is a default status value, 200, set when calling only aResponse(). 
-stubFor(WireMock.post("/").willReturn(aResponse()));
-stubFor(WireMock.post("/").willReturn(aResponse().withStatus(301)));
-
-//The following ones are all reported (the list is not comprehensive):
-stubFor(WireMock.get("/").willReturn(WireMock.ok().withStatus(200)));
-stubFor(WireMock.get("/").willReturn(WireMock.okForContentType("application/json", "{}").withHeader("Location", "location").withStatus(500)));
-stubFor(WireMock.get("/").willReturn(WireMock.status(301).withStatus(400).withHeader("Location", "location")));
+//to:
+{
+  "request": {
+    "method": "GET",
+    "url": "/url",
+    "urlPattern": "/url-pa.*ern"
+  },
+  "response": { ... }
+}
 ```
