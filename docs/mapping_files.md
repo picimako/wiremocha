@@ -171,6 +171,42 @@ or a project launches, and you have some mapping folders open, the files inside 
 
 If you don't use the node decoration feature, it is recommended to disable it to minimize its performance/resource impact on the IDE. 
 
+## Unwrap single stub mapping in multi-mapping definitions
+
+![](https://img.shields.io/badge/inspection-orange) ![](https://img.shields.io/badge/since-1.0.6-blue)
+
+This inspection can report `mappings` properties in JSON mapping files that contain only a single stub mapping.
+In that case, having the `mappings` property specified is not necessary, the stub mapping object itself can be the sole
+content of the mapping file.
+
+It also provides a quick fix that unwraps the stub mapping, and essentially removes the wrapping around the stub mapping.
+
+Whether that child mapping has any content doesn't matter, the property is reported regardless. However, nothing
+is reported when `mappings` has a `meta` sibling property specified, since that one doesn't have a counterpart in
+the individual stub mapping schema.
+
+**Example:**
+
+```json
+{
+  "mappings": [ //"mappings" propery name is reported
+    {
+      "request": { ... },
+      "response": { ... }
+    }
+  ]
+}
+```
+
+becomes
+
+```json
+{
+  "request": { ... },
+  "response": { ... }
+}
+```
+
 ## Create mapping file from template
 
 ![](https://img.shields.io/badge/action-orange) ![](https://img.shields.io/badge/since-1.0.1-blue)
