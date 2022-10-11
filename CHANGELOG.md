@@ -5,6 +5,7 @@
 ### Added
 - [33](https://github.com/picimako/wiremocha/issues/33): Added an inspection for JSON mapping files, that can unwrap single stub mappings wrapped in
   `mappings` properties.
+- Added the `epoch` and `unix` code completion options to the `now` Handlebars helper's `format` hash.
 
 ## 1.0.5
 
