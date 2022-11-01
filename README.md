@@ -12,12 +12,13 @@ It offers various tools to generate and validate WireMock related test code, and
 
 ## Purchase license
 
-Since this plugin is available only via a paid license, you can head over to the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/18860-wiremocha)
-to get your hands on one. You can find more information about pricing and license types/schemes there, including a **30-day trial period**.
+The plugin is available via a paid license, and you can head over to the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/18860-wiremocha)
+to get your hands on one. You can find more information about pricing and licensing options there, including a **30-day trial period**.
 
 ## Dependencies
 
-The WireMocha plugin depends on a few specific plugins whose absence alters the functionality of the plugin, and turns of the following features:
+The WireMocha plugin depends on a few specific plugins whose absence alters the functionality off the plugin, and turns of the following features.
+Most of these, if not all, are bundled with the IDE:
 
 - **JUnit** (optional): JUnit Rule and extension field generation actions (see [JUnit Rules and Extensions](docs/junit_rules_and_extensions.md))
 - **IntelliLang** (optional): various language injections (see [Language Injections](docs/language_injections.md))
@@ -40,7 +41,11 @@ The list of supported IDEs include all free versions of IntelliJ (Community, Edu
   - to simplify response stubbing,
   - to identify and fix incorrect and duplicate response configurations,
   - for validating request matching and response definitions
-- **Intentions** for inlining the contents of response body files, converting between ways of specifying them, and extracting body strings to files.
+- **Intentions** for
+  - inlining the contents of response body files,
+  - converting between ways of specifying them,
+  - extracting body strings to files,
+  - splitting and simplifying JSON mapping files
 
 ### Detailed
 Or, you can find more detailed documentation below:
@@ -57,7 +62,7 @@ Or, you can find more detailed documentation below:
 - [Live Templates](docs/live_templates.md)
 - [Miscellaneous](docs/misc.md)
 
-### Other
+### Built-in WireMock support in IntelliJ IDEA
 
 It is worth noting that IntelliJ IDEA also provides some Spring related features for WireMock.
 See [IntelliJ IDEA 2022.2 EAP 5: Support for Spring 6...](https://blog.jetbrains.com/idea/2022/06/intellij-idea-2022-2-eap-5/)
