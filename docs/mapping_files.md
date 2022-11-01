@@ -189,7 +189,7 @@ the individual stub mapping schema.
 
 ```json
 {
-  "mappings": [ //"mappings" propery name is reported
+  "mappings": [ //"mappings" property name is reported
     {
       "request": { ... },
       "response": { ... }
@@ -211,7 +211,7 @@ becomes
 
 ![](https://img.shields.io/badge/action-orange) ![](https://img.shields.io/badge/since-1.0.1-blue)
 
-The **Create WireMock Mapping File** action is available in the Project view context menu on directories
+The **Create Mapping File** action is available in the Project view context menu on directories
 called `mappings` and on subdirectories of them.
 It uses File Templates to pre-populate mapping files with predefined contents.
 
@@ -263,3 +263,63 @@ The provided file name must include the *.json* extension too.
   ]
 }
 ```
+
+### Split multi-mapping file into multiple single-mapping files
+
+![](https://img.shields.io/badge/action-orange) ![](https://img.shields.io/badge/since-1.0.6-blue)
+
+This action is available in the Project view context menu as *Split Mapping File*. The action is visible regardless of the contents of the mapping files,
+but not all mapping files can be/make sense to be split.
+
+The split happens as follows. Given the following mapping file:
+
+```json
+# filename: multi_mapping.json
+{
+  "mappings": [
+    {
+      "request": { 
+        "method": "GET"
+      }
+      "response": { ... }
+    },
+    {
+      "request": {
+        "method": "POST"
+      }
+      "response": { ... }
+    }
+  ]
+}
+```
+
+this action creates two new files:
+
+```json
+# filename: multi_mapping_0.json
+{
+    "request": {
+      "method": "GET"
+    }
+    "response": { ... }
+}
+```
+
+```json
+# filename: multi_mapping_1.json
+{
+    "request": {
+      "method": "POST"
+    }
+    "response": { ... }
+}
+```
+
+The filenames are index-postfixes starting from 0. The original mapping file is removed after the new files are created.
+
+Mapping files in certain cases cannot be split. If that is the cases, a notification balloon is displayed on in the Project View,
+on the mapping file node, to let you know why the split cannot happen:
+- no indexed data for the file (ideally this should not happen),
+- there is no mapping in the file
+- there is only a single mapping in the file
+- there are multiple mappings, but at least one of them doesn't specify either the `request` or `response` property.
