@@ -30,69 +30,36 @@ stub mapping file nodes in the Project View.
 
 ![mapping_file_node_decoration](assets/mapping_file_node_decoration.png)
 
-It currently provides information on three parts:
-- request method: the value of the `request.method` property
-- request url: the value of, any one of, the following properties first found: `request.url`, `request.urlPath`, `request.urlPattern`, `request.urlPathPattern` 
-- response status: the value of the `response.status` property
+It provides information on the following parts:
+- **request method**: the value of the `request.method` property
+- **request url**: the value of, any one of, the following properties first found: `request.url`, `request.urlPath`, `request.urlPattern`, `request.urlPathPattern` 
+- **response status**: the value of the `response.status` property
 
-Mapping files are put into three different categories:
+### Classification
+
+Mapping files are classified as follows:
 - no mapping
 - single mapping
+- single mapping incomplete
 - multiple mappings
+- multiple mappings incomplete
 
-The way and cases which category and what information is displayed also aims to uncover potentially erroneous mapping files or missing properties. 
+The way and cases which category and what information is displayed also aims to uncover potentially erroneous mapping files and missing properties. 
 
 ### No mapping
 
-A mapping file is considered empty when:
+A mapping file is considered empty, and the file node is decorated with the text *no mapping*, when:
 
 - the file is completely empty,
 - the root-level value is not an object, for instance the content is an array: `["some", "array"]`,
-- there is no `mappings` or `request` top-level property found, for instance: `{}` or `{ "id": "..." }`,
-- there is a `mappings` property, but there is no `request` property inside, in any of its child objects:
-```json
-{
-    "mappings": [
-        {
-          "response": { ... }
-        }
-    ]
-}
-```
-
-In this case, the file is decorated with the *no mapping* text:
-
-The presence/absence of the `response` property is ignored. The file is considered empty regardless.
-
-### Multiple mappings
-
-A mapping file is considered having multiple mappings when:
-
-- there is a `mappings` property, and there is more than one `request` property inside, in any of its child objects:
-```json
-{
-    "mappings": [
-        {
-          "request": { ... }
-          "response": { ... },
-        },
-        {
-          "request": { ... }
-        }
-    ]
-}
-```
-
-The presence/absence of the `response` property is ignored. The file is considered multiple regardless. This might
-change in the future.
-
-In this case, the file is decorated with the *multiple* text:
+- There is neither a `request` nor a `response` property in a single-stub mapping file. `{}` or `{ "id": "..." }`,
+- There is no stub mapping inside a `mappings` property: `{ "mappings": [ ] }` or `{ "mappings": [ {} ] }`
 
 ### Single mapping
 
 A mapping file is considered having a single mapping when:
 
-- there is one request-response mapping in the file:
+- There is one request-response mapping in the file with both a request and a response property present:
 ```json
 {
     "request": {
@@ -104,7 +71,8 @@ A mapping file is considered having a single mapping when:
     }
 }
 ```
-- there is a `mappings` property, and there is only one `request` property inside:
+- There is a `mappings` property, and there is only one stub mapping inside.
+That single mapping must have both a request and a response property:
 ```json
 {
     "mappings": [
@@ -114,26 +82,7 @@ A mapping file is considered having a single mapping when:
                 "url": "/patch-url"
             },
             "response": {
-                "status": 300
-            }
-        }
-    ]
-}
-```
-- there is a `mappings` property, there are multiple mapping objects in it, but only one of them has a `request` property:
-```json
-{
-    "mappings": [
-        {
-            "response": { ... }
-        },
-        {
-            "request": {
-                "method": "PUT",
-                "url": "/put-url"
-            },
-            "response": {
-              "status": 302
+              "status": 300
             }
         }
     ]
@@ -144,21 +93,50 @@ In this case, the file is decorated with the following texts, based on the input
 
 | `request.method` | `request.url*`               | `response.status` | Node decoration text               |
 |------------------|------------------------------|-------------------|------------------------------------|
-| ""               | ""                           | ""                | ""                                 |
-| ""               | ""                           | 200               | -> 200                             |
-| ""               | "/url"                       | ""                | /url                               |
-| ""               | "/url"                       | 200               | /url -> 200                        |
-| PUT              | ""                           | ""                | PUT                                |
-| PUT              | ""                           | 200               | PUT -> 200                         |
-| PUT              | "/url"                       | ""                | PUT /url                           |
+| ""               | ""                           | 200               | <no method> <no url> -> 200        |
+| ""               | "/url"                       | ""                | <no method> /url -> <no status>    |
+| ""               | "/url"                       | 200               | <no method> /url -> 200            |
+| PUT              | ""                           | ""                | PUT <no url> -> <no status>        |
+| PUT              | ""                           | 200               | PUT <no url> -> 200                |
+| PUT              | "/url"                       | ""                | PUT /url -> <no status>            |
 | PUT              | "/url"                       | 200               | PUT /url -> 200                    |
 | PUT              | "/really-very-very-long-url" | 200               | PUT /really-very-very-lo... -> 200 |
 
 The last example shows that url values are truncated at 20 characters to keep the node decoration concise.
 
+### Multiple mappings
+
+A mapping file is considered having multiple mappings when there is a `mappings` property with more than one stub mapping,
+and all mappings contain a `request` and a `response` property inside:
+```json
+{
+    "mappings": [
+        {
+          "request": { ... }
+          "response": { ... },
+        },
+      {
+        "request": {
+          "method": "PUT",
+          "url": "/put-url"
+        },
+        "response": {
+          "status": 302
+        }
+      }
+    ]
+}
+```
+
+In this case, the file node is decorated with the text *multiple*.
+
+Where there is a `mappings` property with more than one stub mapping inside,
+but at least one of them lacks either the `request` or the `response` property,
+it is considered incomplete, and the file node is decorated with *multiple (has incomplete)*. 
+
 ### Enable/disable node decoration
 
-There is also a toolbar action in the Project View to enable/disable the node decoration. By default it is turned off.
+There is also a toolbar action in the Project View to enable/disable the node decoration. By default, it is turned off.
 
 It saves the enabled/disable state per project.
 
