@@ -6,6 +6,8 @@
 - [33](https://github.com/picimako/wiremocha/issues/33): Added an inspection for JSON mapping files, that can unwrap single stub mappings wrapped in
   `mappings` properties.
 - Added the `epoch` and `unix` code completion options to the `now` Handlebars helper's `format` hash.
+- [35](https://github.com/picimako/wiremocha/issues/35): Add a context menu action to mappings directories (and their subdirectories)
+  to merge all stub mappings files in the selected folder into a single file.
 - [36](https://github.com/picimako/wiremocha/issues/36): Added a context menu action to JSON mapping files, that can split
   multi-mapping files into multiple single-mapping files.
 

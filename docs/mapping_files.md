@@ -301,3 +301,112 @@ on the mapping file node, to let you know why the split cannot happen:
 - there is no mapping in the file
 - there is only a single mapping in the file
 - there are multiple mappings, but at least one of them doesn't specify either the `request` or `response` property.
+
+### Merge stub mapping files in a selected folder
+
+![](https://img.shields.io/badge/action-orange) ![](https://img.shields.io/badge/since-1.0.6-blue)
+
+This action is available in the Project view context menu as *Merge Mapping Files in This Directory*, when there is at least two
+JSON file (be it mapping or non-mapping ones) present in the selected directory.
+
+It merges all JSON mapping files in that directory (files in subdirectories are not included) in three phases, and provides a progress bar as well, in case there is a large
+number of files to merge:
+
+- **Phase 1**: collects the stub mapping JSON objects. The mappings are collected in alphabetical order of their containing files' names,
+and in the order of their presence in those files. Non-mapping files, and files that don't contain a stub mapping, are excluded. 
+- **Phase 2**: merges the collected mappings into a new JSON file, whose name must be specified by the user.
+  - NOTE: the *.json* extension must be included when specifying the file name.
+- **Phase 3**: deletes all mapping files from the selected directory:
+  - NOTE: mapping files that don't contain any mapping, are deleted too. At the moment, there is no option to exclude them from the deletion.
+
+There are popup balloons displayed when the whole merge process, or a part of it, couldn't happen due to some precondition, or an error:
+- ***No mapping file to merge.***: when there is no actual mapping file in the directory, even if there are other JSON files present.
+- ***A single mapping file won't be merged.***: when there is only a single mapping file in the directory.
+- ***Could not get the content of some mapping files. See IDE logs.***: there is a problem reading the content of a file.
+- ***Could not delete some mapping files. See IDE logs.***: speaks for itself
+- ***Could not merge files. See IDE logs.***: a catch-all message if there was any other kind of issue during any of the phases that is not caught/handled by the merge logic.
+
+When the balloon message includes *See IDE logs*, there is further stacktrace information and reasoning available in the IDE's **idea.log** file.
+
+**An example for the merge logic:**
+
+Given the following two stub mapping files:
+
+*single_mapping.json*
+```json
+{
+  "request": {
+    "method": "PATCH",
+    "url": "/single-mapping"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "a_response_body.json"
+  }
+}
+```
+
+*multi_mapping.json*
+```json
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "url": "/multi-mapping"
+      },
+      "response": {
+        "status": 404,
+        "body": "{{systemValue key='aKey' type='PROPERTY'}}"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/multi-mapping"
+      },
+      "response": {
+        "status": 500
+      }
+    }
+  ]
+}
+```
+
+The merged version will be:
+
+```json
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "url": "/multi-mapping"
+      },
+      "response": {
+        "status": 404,
+        "body": "{{systemValue key='aKey' type='PROPERTY'}}"
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "url": "/multi-mapping"
+      },
+      "response": {
+        "status": 500
+      }
+    },
+    {
+      "request": {
+        "method": "PATCH",
+        "url": "/single-mapping"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "a_response_body.json"
+      }
+    }
+  ]
+}
+```
