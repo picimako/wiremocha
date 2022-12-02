@@ -1,5 +1,23 @@
 # WireMocha Changelog
 
+## 1.0.6
+
+### Added
+- [33](https://github.com/picimako/wiremocha/issues/33): Added an inspection for JSON mapping files, that can unwrap single stub mappings wrapped in
+  `mappings` properties.
+- Added the `epoch` and `unix` code completion options to the `now` Handlebars helper's `format` hash.
+- [35](https://github.com/picimako/wiremocha/issues/35): Add a context menu action to mappings directories (and their subdirectories)
+  to merge all stub mappings files in the selected folder into a single file.
+- [36](https://github.com/picimako/wiremocha/issues/36): Added a context menu action to JSON mapping files, that can split
+  multi-mapping files into multiple single-mapping files.
+
+### Changed
+- Moved JSON mapping file related context menu actions into a submenu called *WireMock*.
+
+### Fixed
+- Fixed the classification of JSON multi-mapping files. In some cases it caused files to be shown as single-mapping ones in the Project View
+  node decoration instead of multi-mapping.
+
 ## 1.0.5
 
 ### Added
