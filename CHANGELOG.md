@@ -1,5 +1,12 @@
 # WireMocha Changelog
 
+## 1.0.7
+
+### Fixed
+- Fixed an exception during applying the following quick fixes:
+  - the deletion of all Handlebars helper hashes when no hash is supported by that helper
+  - when unwrapping single stub mappings in multi-mapping files regarding [33](https://github.com/picimako/wiremocha/issues/33)
+
 ## 1.0.6
 
 ### Added
