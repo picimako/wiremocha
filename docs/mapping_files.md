@@ -1,9 +1,12 @@
 # Mapping files
 
 <!-- TOC -->
-* [JSON schema](#json-schema)
-* [Request-response information on Project View file nodes](#request-response-information-on-project-view-file-nodes)
-* [Create mapping file from template](#create-mapping-file-from-template)
+  * [JSON schema](#json-schema)
+  * [Request-response information on Project View file nodes](#request-response-information-on-project-view-file-nodes)
+  * [Unwrap single stub mapping in multi-mapping definitions](#unwrap-single-stub-mapping-in-multi-mapping-definitions)
+  * [Create mapping file from template](#create-mapping-file-from-template)
+  * [Split multi-mapping file into multiple single-mapping files](#split-multi-mapping-file-into-multiple-single-mapping-files)
+  * [Merge stub mapping files in a selected folder](#merge-stub-mapping-files-in-a-selected-folder)
 <!-- TOC -->
 
 ## JSON schema
@@ -242,7 +245,7 @@ The provided file name must include the *.json* extension too.
 }
 ```
 
-### Split multi-mapping file into multiple single-mapping files
+## Split multi-mapping file into multiple single-mapping files
 
 ![](https://img.shields.io/badge/action-orange) ![](https://img.shields.io/badge/since-1.0.6-blue)
 
@@ -302,7 +305,7 @@ on the mapping file node, to let you know why the split cannot happen:
 - there is only a single mapping in the file
 - there are multiple mappings, but at least one of them doesn't specify either the `request` or `response` property.
 
-### Merge stub mapping files in a selected folder
+## Merge stub mapping files in a selected folder
 
 ![](https://img.shields.io/badge/action-orange) ![](https://img.shields.io/badge/since-1.0.6-blue)
 
