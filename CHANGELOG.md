@@ -1,5 +1,16 @@
 # WireMocha Changelog
 
+## 1.0.8
+
+### Added
+- Added support for IntelliJ 2023.1.
+- [34](https://github.com/picimako/wiremocha/issues/34): Added an intention action that can wrap a stub mapping JSON object in a single-mapping file
+  wrap in the `mappings` property to prepare it for multiple mapping objects.
+- [35](https://github.com/picimako/wiremocha/issues/35): Added a Project View context menu action to merge multiple stub mapping files into
+  a newly created file.
+- [39](https://github.com/picimako/wiremocha/issues/39): Added simple syntax highlighting for [JsonUnit placeholders](https://github.com/lukas-krecan/JsonUnit#typeplc)
+  in Java files in the parameter of `com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder#withBody(java.lang.String)`.
+
 ## 1.0.7
 
 ### Fixed
