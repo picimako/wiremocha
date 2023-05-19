@@ -1,5 +1,66 @@
 # WireMocha Changelog
 
+## 1.0.11
+
+### Deprecated
+- *WireMocha has been supporting IntelliJ since version 2021.3, but to be able to provide better functionality and performance,
+  v1.0.12 will be the first release in which 2021.3 will no longer be supported.*
+
+  *Starting from v1.0.12, with each new major release of IntelliJ, the earliest supported major IDE version will be bumped.*
+  ***In v1.0.11 nothing has changed on this part, this is just a heads-up for the future.***
+
+### Added
+- [52](https://github.com/picimako/wiremocha/issues/52):
+  - Added default json schema version reporting for `WireMock.matchingJsonSchema()`.
+  - Added support for converting `matchesJsonSchema` properties to `WireMock.matchingJsonSchema()` in Java code preview.
+- [50](https://github.com/picimako/wiremocha/issues/50): Added `scheme`, `host`, `port`, `customMatcher` and `multipartPatterns` properties
+  to the request mapping JSON schema for improved validation and code completion of them in the IDE.
+
+### Changed
+- Added preliminary support for IntelliJ 2023.2 EAP.
+
+### Fixed
+- Fixed the json stub mapping object up-down mover for cases when the switched mappings are of different length.
+- [53](https://github.com/picimako/wiremocha/issues/53): Fixed the code completion for Content-Type header values
+  inside `response.headers.Content-Type.*` properties. Both string and string-array header values are supported as locations for completion.
+
+## 1.0.10
+
+### Added
+- [27](https://github.com/picimako/wiremocha/issues/27): Added Java code generation and preview during editing JSON stub mapping files.
+  This preview is a split panel similar to how for example Markdown file previewing works. It is disabled by default and can be
+  enabled in the IDE Settings.
+
+### Changed
+- [48](https://github.com/picimako/wiremocha/issues/48): JSON schemas are now provided based on the versions of WireMock used
+  in each module of a project.
+- Added validation to report if there is at least one empty path variable (i.e. `{}`) in `request.urlPathTemplate` or `WireMock.urlPathTemplate()`.
+- Improved and simplified the classification of stub mapping JSON files. Neither single- nor multi-mapping files are considered incomplete in any case.
+
+## 1.0.9
+
+### Added
+- Added up-down mover for stub mapping objects in multi-mapping files. Using the Ctrl+Shift+Up/Down shortcuts or similar actions, when the
+  caret is placed right before/after the opening curly of a stub-mapping object, the entire object can be moved up/down.
+- [40](https://github.com/picimako/wiremocha/issues/40):
+  - Added support for converting `withBody()` call arguments to base64 when
+    the argument consists of a constant reference, or multiple string literals or constants combined with the + operation.
+  - Added support for the response body extraction intention action to support text blocks and combined string literals and constants.
+  - If the project JDK is version 17 or above, inlining a response body file will happen into a text block instead of a regular string literal.
+- [42](https://github.com/picimako/wiremocha/issues/42): Added code completion for Content-Type header values in `withHeader()` calls of
+  `ResponseDefinitionBuilder` and `MappingBuilder`, as well as in JSON stub-mapping files inside `request/response.headers.Content-Type.*` properties.
+- [43](https://github.com/picimako/wiremocha/issues/43) - WireMock 3.0.0-beta3 support:
+  - Added the `urlPathTemplate` and `pathParameters` properties to the stub mapping JSON schema.
+  - Extended the duplicate `request.url*` property analysis with `urlPathTemplate`.
+  - Added an intention action that can generate `request.pathParameters` and matchers inside for the path variables in the `request.urlPathTemplate` property.
+  - Added an intention action that can generate `withPathParam()` calls with matchers inside for the path variables in the `WireMock.urlPathTemplate()` call.
+  - Added an inspection to report the `request.pathParameters` property if there is no `request.urlPathTemplate` property specified in the same stub mapping.
+  - Added inspections to report the value of the `request.urlPathTemplate` property and the `WireMock.urlPathTemplate()` call if there is no path variable defined in them.
+  - Added inspections to report when `request.pathParameters`/`withPathParam()` calls have one or more param name specified that doesn't exist in `request.urlPathTemplate`/`WireMock.urlPathTemplate()`.
+- [45](https://github.com/picimako/wiremocha/issues/43) - WireMock 3.0.0-beta5 support:
+  - Added default argument value validation for `WireMockConfiguration.proxyTimeout()` and `WireMockConfiguration.proxyPassThrough()`.
+  - Added code completion for the `request.clientIp` Handlebars helper attribute, and fixed the list of displayed code completion options for `request`.
+
 ## 1.0.8
 
 ### Added
