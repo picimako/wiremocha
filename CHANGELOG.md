@@ -2,15 +2,14 @@
 
 ## 1.0.11
 
-### Deprecated
-- *WireMocha has been supporting IntelliJ since version 2021.3, but to be able to provide better functionality and performance,
-  v1.0.12 will be the first release in which 2021.3 will no longer be supported.*
+*WireMocha has been supporting IntelliJ since version 2021.3, but to be able to provide better functionality and performance,
+v1.0.12 will be the first release in which 2021.3 will no longer be supported.*
 
-  *Starting from v1.0.12, with each new major release of IntelliJ, the earliest supported major IDE version will be bumped.*
-  ***In v1.0.11 nothing has changed on this part, this is just a heads-up for the future.***
+*Starting from v1.0.12, with each new major release of IntelliJ, the earliest supported major IDE version will be bumped.*
+***In v1.0.11 nothing has changed on this part, this is just a heads-up for the future.***
 
 ### Added
-- [52](https://github.com/picimako/wiremocha/issues/52):
+- [52](https://github.com/picimako/wiremocha/issues/52) WireMock 3.0.0-beta-8 support:
   - Added default json schema version reporting for `WireMock.matchingJsonSchema()`.
   - Added support for converting `matchesJsonSchema` properties to `WireMock.matchingJsonSchema()` in Java code preview.
 - [50](https://github.com/picimako/wiremocha/issues/50): Added `scheme`, `host`, `port`, `customMatcher` and `multipartPatterns` properties
