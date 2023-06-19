@@ -21,4 +21,4 @@ The list of supported IDEs include all free versions of IntelliJ (Community, Edu
 
 ## Documentation
 
-The documentation as available on its [dedicated website](https://www.picimako.com/wiremocha).
+The documentation is available on its [dedicated website](https://www.picimako.com/wiremocha).
