@@ -1,5 +1,25 @@
 # WireMocha Changelog
 
+## 1.0.12
+
+### Added
+- [58](https://github.com/picimako/wiremocha/issues/58): Added the first iteration of a feature that can generate IntelliJ HTTP Client requests
+  from WireMock Admin API related calls from Java code.
+- [59](https://github.com/picimako/wiremocha/issues/59): Added WireMock 3 beta-9 form parameter configuration conversion (JSON to Java) to the stub mapping preview.
+- [59](https://github.com/picimako/wiremocha/issues/59): Added `request.formParameters` property to the stub mapping JSON schema.
+- Offer this plugin when a project has dependency on either `com.github.tomakehurst:wiremock` or `com.github.tomakehurst:wiremock-jre8`.
+
+### Changed
+- Dropped support for IJ 2021.3.
+- Temporarily disabled the JsonPath language injection for the `matchesJsonPath` JSON property, due to certain changes in the IntelliJ Platform.
+- Improved the generation of JUnit4 Rule fields and JUnit5 extension fields. Now, they are generated right after the field preceding the caret position.
+- Improved the Admin API related live templates with macros.
+- Improved the local variable creation in the JSON-Java stub mapping preview for `Parameters`, `Metadata` and `PostServeActionDefinition`s. Now when suitable,
+  the `Map.of()` initializer is used instead of `new HashMap<>()`.
+
+### Fixed
+- Fixed a `ClassNotFoundException` for an invalid plugin extension configuration.
+
 ## 1.0.11
 
 *WireMocha has been supporting IntelliJ since version 2021.3, but to be able to provide better functionality and performance,
