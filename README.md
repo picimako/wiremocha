@@ -1,13 +1,22 @@
 # WireMocha plugin for IntelliJ
 
 [![Version](https://img.shields.io/jetbrains/plugin/v/18860-wiremocha.svg)](https://plugins.jetbrains.com/plugin/18860-wiremocha)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/18860-wiremocha.svg)](https://plugins.jetbrains.com/plugin/18860-wiremocha)
-![](https://img.shields.io/badge/since-IJ2021.3-blue) ![](https://img.shields.io/badge/until-IJ2022.3-blue)
 
 <!-- Plugin description -->
-WireMocha is an IntelliJ-based plugin that provides framework integration for the [WireMock](http://wiremock.org) library.
+WireMocha is an IntelliJ-based plugin that provides framework integration for the [WireMock](https://wiremock.org) library.
 
-It offers various tools to generate and validate WireMock related test code, and to provide additional contextual information, both in the JSON and Java DSLs.
+It offers various tools to generate and validate WireMock related test code, and to provide additional contextual information
+in the following areas, among others:
+- WireMock version-specific stub mapping file schemas
+- Validation, code completion and navigation for [Handlebars helpers](https://www.picimako.com/wiremocha/response-templating-and-handlebars-helpers/)
+- [Language injections](https://www.picimako.com/wiremocha/language-injections) in the JSON and Java DSLs
+- [JUnit 4](https://www.picimako.com/wiremocha/junit-4-rules) and [JUnit 5](https://www.picimako.com/wiremocha/junit-5-extensions) support
+- On-the-fly conversion of [JSON stub mapping files to the Java DSL](https://www.picimako.com/wiremocha/mapping-files/#17-preview-generated-java-code)
+- UI-based [scenario generation](https://www.picimako.com/wiremocha/stubbing/#19-scenario-generation)
+- [Create, split and merge selected mapping objects and mapping files](https://www.picimako.com/wiremocha/mapping-files/)
+- [Request-response summary](https://www.picimako.com/wiremocha/mapping-files/#2-request-response-information-on-project-view-file-nodes) of mapping files in the Project View
+- Various WireMock-specific static code analysis checks
+- Other features for code generation, optimization, navigation and more
 <!-- Plugin description end -->
 
 ## Purchase license
