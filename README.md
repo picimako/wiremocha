@@ -7,7 +7,7 @@ WireMocha is an IntelliJ-based plugin that provides framework integration for th
 
 It offers various tools to generate and validate WireMock related test code, and to provide additional contextual information
 in the following areas, among others:
-- WireMock version-specific stub mapping file schemas
+- [JSON schemas](https://www.picimako.com/wiremocha/mapping-files/#1-json-schema) attached to stub mapping files for code completion and validation
 - Validation, code completion and navigation for [Handlebars helpers](https://www.picimako.com/wiremocha/response-templating-and-handlebars-helpers/)
 - [Language injections](https://www.picimako.com/wiremocha/language-injections) in the JSON and Java DSLs
 - [JUnit 4](https://www.picimako.com/wiremocha/junit-4-rules) and [JUnit 5](https://www.picimako.com/wiremocha/junit-5-extensions) support
