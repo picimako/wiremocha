@@ -1,5 +1,23 @@
 # WireMocha Changelog
 
+## 1.0.13
+
+### Changed
+- Mapping file node decoration can now display urls specified via the `request.urlPathTemplate` attribute.
+- [64](https://github.com/picimako/wiremocha/issues/64): Updated base64 encoding/decoding logic based on WireMock 3.0.0-beta-11 switching from `com.google.common.io.BaseEncoding` to `java.util.Base64`.
+- [64](https://github.com/picimako/wiremocha/issues/64): Added the `serveEventListeners` property to the stub mapping JSON schema.
+- [64](https://github.com/picimako/wiremocha/issues/64): Added the `serveEventListeners` property to the set of supported properties for conversion to Java code.
+- [64](https://github.com/picimako/wiremocha/issues/64): The `ResponseTemplateTransformer.Builder.maxCacheEntries()` inlay hint is now extended to be valid only until WireMock 2.35.0.
+  If you are using WireMock 3.0.0, it is advised to turn the inlay hint off under `Settings` / `Editor` / `Inlay Hints` / `Other` / `Java` / `WireMock: ResponseTemplateTransformer.maxCacheEntries`.
+- Added further checks to make sure providing schema for JSON stub mapping files doesn't fail when the conditions are not proper.
+
+### Fixed
+- [63](https://github.com/picimako/wiremocha/issues/63): Attempt to fix an exception thrown when updating the Java code preview during a potential document save.
+- Fixed a `NullPointerException` during converting WireMock `Parameters` in the Java code preview.
+- Fixed the conversion of missing and empty `Parameters` objects in `customMatchers`, in the Java code preview.
+- [65](https://github.com/picimako/wiremocha/issues/65): The `response.jsonBody` property now permits array values as well besides objects.
+- Added JSON escaping to the value of `response.jsonBody` when converting it to a `withBody()` call in the Java code preview.
+- 
 ## 1.0.12
 
 ### Added
