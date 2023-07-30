@@ -31,3 +31,8 @@ The list of supported IDEs include all free versions of IntelliJ (Community, Edu
 ## Documentation
 
 The documentation is available on its [dedicated website](https://www.picimako.com/wiremocha).
+
+## OSS attributions
+
+This project derives some built-in documentation and specifications from the [WireMock](https://github.com/wiremock/wiremock) open source project.
+This content is licensed under the Apache License v2.

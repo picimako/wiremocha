@@ -1,5 +1,27 @@
 # WireMocha Changelog
 
+## 1.0.14
+
+### Added
+- [60 - **Testcontainers Java**](https://github.com/picimako/wiremocha/issues/60): Added an inspection to detect multiple `WireMockContainer.withName()` and `withFile()/withFileFromResource()`
+  calls with the same mapping name or mapping file.
+- [60 - **Testcontainers Java**](https://github.com/picimako/wiremocha/issues/60): Added JSON language injection to the `json` parameter of `WireMockContainer.withMapping(name, json)`.
+- [60 - **Testcontainers Java**](https://github.com/picimako/wiremocha/issues/60): Added code completion for CLI arguments in `WireMockContainer.withCliArg()`. It displays only those CLI args that are supported
+  by the WireMock version specified during instantiation of the `WireMockContainer`.
+- [60 - **Testcontainers Java**](https://github.com/picimako/wiremocha/issues/60): Added code completion and reference resolution for WireMock extension classes in `WireMockContainer.withExtension(id, className)`.
+- [66 - **WireMock 3.0.0-beta-12**](https://github.com/picimako/wiremocha/issues/66): Call chains starting with a call to `WireMock.requestedFor(String, UrlPattern)` are now supported
+  for analyzing duplicate header, body, etc. configuration.
+- [66 - **WireMock 3.0.0-beta-12**](https://github.com/picimako/wiremocha/issues/66): Added an inspection to detect `RequestPatternBuilder.withHeader()/withQueryParam()`
+  called with `WireMock.absent()` or `MultiValuePattern.absent()`. A quick fix can replace them with a call to `RequestPatternBuilder.withoutHeader()/withoutQueryParam()`.
+- Added `ANY` to the selectable request methods in the WireMock tool window for configuring Scenario generation.
+- Added the `epoch` and `unix` code completion options to the `date` Handlebars helper's `format` hash.
+
+### Changed
+- Improved code completion of CA keystore types and content type headers, so that only the relevant items are presented in `WireMockConfiguration.caKeystoreType()`,
+  in `withHeader()` calls, and in header property values in stub mapping files.
+- Improved code completion for WireMock extensions in `WireMockConfiguration.extensions()`. Now it only displays actual extension implementation classes.
+- Various optimizations under the hood.
+
 ## 1.0.13
 
 ### Changed
