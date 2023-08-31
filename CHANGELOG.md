@@ -1,5 +1,21 @@
 # WireMocha Changelog
 
+## 1.0.15
+
+### Added
+- Added an inspection to report `request.url` and `request.urlPath` JSON properties containing regex symbols.
+  Those values should potentially be used inside `urlPattern`, `urlPathPattern` or `urlPathTemplate`.
+- Added an inspection to report `WireMock.urlEqualTo()` and `WireMock.urlPathEqualTo()` calls containing regex symbols.
+  Those values should potentially be used inside `urlMatching()`, `urlPathMatching()` or `urlPathTemplate()`.
+- **Testcontainers Java**: Added support for version alpha-7.
+
+### Changed
+- Updated some inspection messages to make them more specific.
+- Removed some unnecessary logic regarding JSON stub mapping Java preview.
+
+### Fixed
+- Fixed an issue with storing and handling different WireMock library versions.
+
 ## 1.0.14
 
 ### Added
