@@ -1,5 +1,31 @@
 # WireMocha Changelog
 
+## 1.0.16
+
+### Added
+- **WireMock 3.2.0**: Added the `disable-response-templating` CLI option to the list of code completion items for Testcontainers configuration.
+- **WireMock 3.2.0**: Added the default argument value analysis for `WireMockConfiguration.extensionScanningEnabled()`,
+  and the same CLI option, `disable-extensions-scanning`, to Testcontainers code completion.
+- [69](https://github.com/picimako/wiremocha/issues/69): Added code completion of Handlebars helper request attributes for the `originalRequest` property based on the
+  [Simulating Webhooks and Callbacks](https://wiremock.org/3.x/docs/webhooks-and-callbacks/#using-data-from-the-original-request) WireMock documentation.
+- [69](https://github.com/picimako/wiremocha/issues/69): Added Handlebars language injection into `serveEventListeners.parameters.url/method/body` properties,
+  when the listener name is *webhook*, and into the `withUrl()`, `withMethod()` and `withBody()` methods of `WebhookDefinition`.
+- [69](https://github.com/picimako/wiremocha/issues/69): Added Content-Type header value code completion for parameters of `WebhookDefinition.withHeader()`,
+  and in the `serveEventListeners.parameters.headers` JSON property.
+- [69](https://github.com/picimako/wiremocha/issues/69): Webhooks as serve event listeners (WireMock 3.x) are now converted as specific webhooks
+  from JSON to Java in the stub-mapping preview.
+- [69](https://github.com/picimako/wiremocha/issues/69): Added a handful of static code analysis checks for `Webhooks.webhook()` call chains and webhook specific `serveEventListeners.parameters` properties.
+- Added the `BEFORE_RESPONSE_SENT` request phase to the stub-mapping JSON schema for [WireMock/2294](https://github.com/wiremock/wiremock/issues/2294).
+
+### Changed
+- Supported IDE version range has changed to 2022.2 - 2023.3-EAP.
+- Optimized the insertion of `WireMockRule` and `WireMockExtension` fields in JUnit test classes.
+- Added a WireMocha specific line marker icon for the Admin API calls in the Java DSL.
+- Extended the max cache entries inlay hint to `WireMockConfiguration.withMaxTemplateCacheEntries()` introduced in WireMock 3.1.0.
+
+### Fixed
+- Added missing Java escaping at a couple of places in the Java stub-mapping preview.
+
 ## 1.0.15
 
 ### Added
