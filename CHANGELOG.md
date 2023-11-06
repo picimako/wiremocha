@@ -1,5 +1,17 @@
 # WireMocha Changelog
 
+## 1.0.17
+
+### Added
+- [70](https://github.com/picimako/wiremocha/issues/70): Added RegExp language injection into `WireMockConfiguration#withPermittedSystemKeys`.
+
+### Changed
+- Dependency version updates.
+- Various code optimizations.
+
+### Fixed
+- Some minor bugfixes.
+
 ## 1.0.16
 
 ### Added
