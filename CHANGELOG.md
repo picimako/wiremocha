@@ -1,5 +1,28 @@
 # WireMocha Changelog
 
+## 1.0.18
+
+### Added
+- [54](https://github.com/picimako/wiremocha/issues/54): Custom mapping root dirs can now be specified in the plugin settings. For now, the set
+  root dirs are displayed with a dedicated icon in the Project View.
+- [72](https://github.com/picimako/wiremocha/issues/72): Added opt-in inlay hints to Handlebars helper parameters in fragments injected into JSON stub mapping files.
+  Besides the default option to toggle the inlay hints themselves, it also provides an option to toggle the hints for sub-expressions separately.
+- [76](https://github.com/picimako/wiremocha/issues/76): Added plugin settings to be able to toggle Handlebars language injection in JSON stub mapping files,
+  and Java DSL methods, as well as to toggle other language injections in JSON stub mapping files.
+- [75](https://github.com/picimako/wiremocha/issues/75): In the New Directory creation popup, completion items for `mappings` and `__files` directories are displayed to speed up the creation
+  of them.
+- Added 'x' as a valid mathematical operator to the `math` Handlebars helper validation.
+
+### Changed
+- Supported IDE version range has changed to 2023.1.1 - 2023.3-Beta.
+- Improved the inspection messages of Handlebars helper inspections regarding validating the number of specified parameters. From now on, where feasible,
+  it includes a short description of the missing parameters, instead of just the overall mandatory number of parameters.
+- Various optimizations under the hood.
+
+### Fixed
+- Fixed an exception thrown when deleting a Handlebars helper hash via quick fix.
+- Fixed an exception thrown when adding missing mandatory hashes to a Handlebars helper via quick fix.
+
 ## 1.0.17
 
 ### Added
