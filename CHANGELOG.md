@@ -1,5 +1,10 @@
 # WireMocha Changelog
 
+## 1.0.19
+
+### Fixed
+- [78](https://github.com/picimako/wiremocha/issues/78): Fixed the issue that no WireMock schema was attached to JSON stub mapping files located in modules without any WireMock version configured.
+
 ## 1.0.18
 
 ### Added
