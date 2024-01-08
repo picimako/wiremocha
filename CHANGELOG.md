@@ -1,5 +1,26 @@
 # WireMocha Changelog
 
+## 1.0.20
+
+### Added
+- [77](https://github.com/picimako/wiremocha/issues/77): Added an inspection to report invalid date-time truncation values in the `truncateDate` Handlebars helper.
+- [77](https://github.com/picimako/wiremocha/issues/77): Added code completion of date-time truncation values for the truncation parameter of the `truncateDate` Handlebars helper.
+- [77](https://github.com/picimako/wiremocha/issues/77): Added reference to the date-time truncation values for the truncation parameter, so that users can navigate to the corresponding `DateTimeTruncation` enum constants
+  with Ctrl+Click and similar mechanisms.
+
+### Changed
+- Added the WireMock version into the JSON stub mapping schema names to be able to distinguish them in the JSON schema selector menu.
+- [79](https://github.com/picimako/wiremocha/issues/79): Moved the plugin settings under the *Language & Frameworks* settings page.
+- [80](https://github.com/picimako/wiremocha/issues/80): Reorganized inspections and intention actions in the IDE settings,
+  into DSL and language specific groups. This is also a preparation for introducing support for the coming YAML DSL.
+- Code optimizations under the hood.
+
+### Fixed
+- Fixed the problem that one of the intention actions for generating path parameter matchers from a URL path template was not available in the IDE settings
+  due to both the Java and JSON intention having had the same name.
+- Fixed the problem that when multiple Handlebars fragments were injected into the same Java or JSON String literal, starting from the second helper,
+  navigation to the WireMock helper implementation via Ctrl+click didn't work. It worked only for the first helper name in the string.
+
 ## 1.0.19
 
 ### Fixed
