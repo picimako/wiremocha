@@ -1,5 +1,63 @@
 # WireMocha Changelog
 
+## 1.0.23
+
+### Added
+- [87](https://github.com/picimako/wiremocha/issues/87) - **wiremock-faker-extension**: Added code completion for Data Faker providers in the `random` Handlebars helper.
+- [89](https://github.com/picimako/wiremocha/issues/89): Added code completion for serve event listeners in JSON stub mapping files.
+  Currently `webhook` as well as listeners from the wiremock-state-extension are supported.
+- [68](https://github.com/picimako/wiremocha/issues/68) - **wiremock-state-extension**: Added inspections, code completion and references for the `state` Handlebars helper.
+- [68](https://github.com/picimako/wiremocha/issues/68) - **wiremock-state-extension**: Added inspections to report configuration issues with the `recordState` and `deleteState` serve event listener.
+- [68](https://github.com/picimako/wiremocha/issues/68) - **wiremock-state-extension**: Handlebars language is now injected into JSON string literal properties under the `recordState` and `deleteState` serve event listener,
+  and for properties under the `request.customMatcher` for the `state-matcher`.
+- [68](https://github.com/picimako/wiremocha/issues/68) - **wiremock-state-extension**: Added inspections to report configuration issues with the `state-matcher` custom request matcher.
+
+### Changed
+- The configuration of the `random` and `state` helpers are now validated only when the wiremock-faker-extension and wiremock-state extension are
+  available in the project, respectively. This prevents reporting false positives when one uses helpers with the same names but from
+  extensions not supported by WireMocha.
+
+## 1.0.22
+
+### Added
+- [84](https://github.com/picimako/wiremocha/issues/84): Added code completion for JsonUnit placeholders in Java and JSON string literals.
+- [84](https://github.com/picimako/wiremocha/issues/84): Added code completion for XmlUnit placeholders in Java and JSON string literals, as well as XML tags and XML attribute values.
+- Added syntax highlighting for JsonUnit placeholders starting with a #, like `#{json-unit....}`. Before, only the `${json-unit....}` format was supported.
+- Added syntax highlighting for XmlUnit placeholders in Java and JSON string literals.
+- Added plugin settings to toggle JsonUnit and XmlUnit placeholder highlighting. They can be enabled/disabled separately.
+- [85](https://github.com/picimako/wiremocha/issues/85): Added an inspection to report issues regarding the `enablePlaceholders` configuration of `EqualToXmlPattern` in JSON stub mapping and Java files.
+- [81](https://github.com/picimako/wiremocha/issues/81): The extension [RandomHelper](https://github.com/wiremock/wiremock-faker-extension) is now recognized by the plugin and inspections and references are applied.
+- [86](https://github.com/picimako/wiremocha/issues/86) - **WireMock 3.4.0**: Added `--version` to list of CLI options when code completing options in Testcontainers Java configuration.
+- [86](https://github.com/picimako/wiremocha/issues/86) - **WireMock 3.4.0**: Added the `extensionScanningEnabled` configuration option when converting JUnit5 test classes from the declarative to programmatic approach and vice versa.
+- [86](https://github.com/picimako/wiremocha/issues/86) - **WireMock 3.4.0**: Added the `GET_OR_HEAD` request method to the stub mapping preview and the scenario generation tool window.
+
+### Changed
+- Supported IDE version range has changed to 2023.2 - 2024.1-EAP.
+- [82](https://github.com/picimako/wiremocha/issues/82): The Handlebars language is now injected into complete Java and JSON string literals instead of injecting fragments into
+  the helper and similar expression parts of them.
+- Simplified and optimized the JsonUnit placeholder annotation logic for the Java and JSON DSLs. In case of the Java DSL, the restriction that the annotated String literal had
+  to be in the argument list of `ResponseDefinitionBuilder#withBody(String)` has been lifted.
+- JsonPath language injection is now re-enabled both for JSON and Java files.
+- [86](https://github.com/picimako/wiremocha/issues/86) - **WireMock 3.4.0**: The intention to convert JUnit 5 classes from programmatic to declarative now checks for the absence of the `@WireMockTest`
+  annotation on base classes as well.
+
+### Fixed
+- [82](https://github.com/picimako/wiremocha/issues/82): The Handlebars language is now injected properly into Java text blocks.
+- Handlebars code completions are now available again in Java and JSON String literals injected with Handlebars language.
+- JsonUnit placeholders are now annotated in Java String literals inside String concatenations with +.
+- The **Merge Selected Mapping Files** action is available again on selected JSON stub mapping files.
+- Fixed a few instances of the same exception regarding action updates.
+- Fixed a plugin settings option title.
+- Fixed the scenario generation tool window to update generated code snippets upon deleting rows from the table.
+
+## 1.0.21
+
+### Changed
+- Made a small modification in the inspection message related to invalid date-time truncations in the `truncateDate` helper.
+
+### Fixed
+- Fixed an exception thrown when the `truncateDate` Handlebars helpers was supplied with an invalidate date-time truncation value.
+
 ## 1.0.20
 
 ### Added
