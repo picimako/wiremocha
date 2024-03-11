@@ -1,5 +1,16 @@
 # WireMocha Changelog
 
+## 1.0.24
+
+### Added
+- [90](https://github.com/picimako/wiremocha/issues/90) - **wiremock-grpc-extension**: Added Handlebars language injection into `WireMockGrpc.jsonTemplate()`, and JSON language injection into `WireMockGrpc.json()`.
+- [90](https://github.com/picimako/wiremocha/issues/90) - **wiremock-grpc-extension**: Added code completion of `WireMockGrpc.Status` constants in the `response.headers.grpc-status-name` property in the JSON DSL.
+- [90](https://github.com/picimako/wiremocha/issues/90) - **wiremock-grpc-extension**: Added an inspection to report invalid `WireMockGrpc.Status` values in the `response.headers.grpc-status-name` property in the JSON DSL.
+- [90](https://github.com/picimako/wiremocha/issues/90) - **wiremock-grpc-extension**: Added an inspection to report references to potential GRPC service calls specified in `request.url*` (except `request.urlPath`) JSON properties.
+- [90](https://github.com/picimako/wiremocha/issues/90) - **wiremock-grpc-extension**: Added an inspection to report GRPC service references in `request.urlPath` when not used with POST request method.
+- [90](https://github.com/picimako/wiremocha/issues/90) - **wiremock-grpc-extension**: Added line markers to `request.urlPath` JSON properties to open the corresponding service implementation Java class or service declaration in a `.proto` file.
+- [90](https://github.com/picimako/wiremocha/issues/90) - **wiremock-grpc-extension**: Added code completion of GRPC service methods in the `request.urlPath` JSON property.
+
 ## 1.0.23
 
 ### Added
