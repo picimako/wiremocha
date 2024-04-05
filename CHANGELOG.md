@@ -1,5 +1,26 @@
 # WireMocha Changelog
 
+## 1.0.25
+
+### Added
+- [95](https://github.com/picimako/wiremocha/issues/95): Added code completion for the new CLI arguments: disable-http2-plain, disable-http2-tls.
+- [95](https://github.com/picimako/wiremocha/issues/95): Added code completion for the `default` hash of the `systemValue` Handlebars helper.
+- [95](https://github.com/picimako/wiremocha/issues/95): Added a WireMock 3.5.0 specific stub mapping schema that contains the `response.removeProxyRequestHeaders` property.
+- [95](https://github.com/picimako/wiremocha/issues/95): The stub mapping Java preview now converts the `response.removeProxyRequestHeaders` property as well.
+- [91](https://github.com/picimako/wiremocha/issues/91): Added a project-level toggle option in the plugin settings, so that users can opt in to use the stub mapping schema provided
+by JetBrains' WireMock plugin. By default, the ones provided by WireMocha are applied.
+- [96](https://github.com/picimako/wiremocha/issues/96): Extended the code completion of Data Faker providers with the Food, Sport,
+Videogame and Entertainment groups.
+
+### Changed
+- [93](https://github.com/picimako/wiremocha/issues/93): Improved cache refreshing conditions around stub mapping file retrieval.
+- Improved the JSON schema assignment logic for stub mapping files.
+- [92](https://github.com/picimako/wiremocha/issues/92): Changed the GRPC service line marker icon to a Protocol Buffer specific one.
+
+### Fixed
+- JSON schemas that are not applicable to an edited stub mapping file are no longer displayed in the schema selector at the bottom of the IDE.
+- Fixed an exception that could occur when files were being closed during project initialization.
+
 ## 1.0.24
 
 ### Added
