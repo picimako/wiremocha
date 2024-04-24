@@ -1,5 +1,15 @@
 # WireMocha Changelog
 
+## 1.0.26
+
+### Added
+- [97](https://github.com/picimako/wiremocha/issues/97): Added support for the `jwt` and `jwks` Handlebars helpers provided
+  by the wiremock-jwt-extension.
+- [99](https://github.com/picimako/wiremocha/issues/99): The JSON schema provided by WireMocha is now assigned to the mapping files in the *WireMock Stubs*
+  scratch folder that is used by the JetBrains WireMock plugin to generate mappings from endpoints.
+- [98](https://github.com/picimako/wiremocha/issues/98): Improved the stub mapping JSON schema: delay distributions got additional validation for the required
+  properties. StringValuePatterns are also code completed in the `request.host`, `request.bodyPatterns` and `request.multipartPattern.bodyPatterns` properties.
+
 ## 1.0.25
 
 ### Added
