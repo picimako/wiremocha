@@ -1,5 +1,26 @@
 # WireMocha Changelog
 
+## 1.0.27
+
+### Added
+- Added code completion for `StringValuePattern` properties inside the `request.pathParameters` and `request.cookies` properties.
+- Added code completion of `MultiValuePattern` properties inside `request.queryParameters`, `request.formParameters`, `request.headers`
+  and `request.multipartPatterns.headers`.
+- [100](https://github.com/picimako/wiremocha/issues/100): Added descriptions to code completion elements when completing
+  Handlebars helper hashes. An icon for mandatory hashes is also added.
+- [94](https://github.com/picimako/wiremocha/issues/94): Added default method argument value reporting for the methods in `se.bjurr.wiremockpact.wiremockpactlib.api.WireMockPactConfig`.
+- [94](https://github.com/picimako/wiremocha/issues/94): Added Regexp language injection to arguments of some methods in `se.bjurr.wiremockpact.wiremockpactlib.api.WireMockPactConfig`.
+- [94](https://github.com/picimako/wiremocha/issues/94): Convert `WireMockPactConfig` metadata from JSON to Java in the stub mapping preview.
+- [94](https://github.com/picimako/wiremocha/issues/94): Added an action into the Alt+Insert generate menu that can generate a `WireMockPactExtension`-type JUnit5 `@RegisterExtension` field.
+
+### Changed
+- Minor improvements on stub-mapping JSON property descriptions.
+- Changed the stub mapping Java preview editor's name to *Raw / Java Preview*, so that it fits better with the WireMock plugin's *Data* tab.
+
+### Fixed
+- Fixed an exception that occurred during previewing the results of the *Remove redundant method call* intention action.
+- Fixed an unhandled `JsonSyntaxException` during the Java preview of JSON stub mapping files.
+
 ## 1.0.26
 
 ### Added
