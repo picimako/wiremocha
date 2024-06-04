@@ -1,5 +1,30 @@
 # WireMocha Changelog
 
+## 1.0.28
+
+### Added
+- [104](https://github.com/picimako/wiremocha/issues/104): Added inspection, inlay hint, reference, etc. support for the `arrayJoin`, `arrayAdd`, `arrayRemove` and `val` Handlebars helpers.
+- [104](https://github.com/picimako/wiremocha/issues/104): Made Handlebars helper name completion version specific, so the e.g. `arrayJoin` is not code completed when using WireMock earlier than 3.6.0.
+- [104](https://github.com/picimako/wiremocha/issues/104): Added `supported-proxy-encodings` to the code completion of command line arguments in Testcontainers code.
+- [103](https://github.com/picimako/wiremocha/issues/103): Added a quick documentation popup for the hash parameters of WireMock's Handlebars helpers.
+
+### Changed
+- Supported IDE version range has changed to 2023.3 - 2024.2-EAP.
+- Renamed the latest stub mapping schema from *WireMock 3.5.0 Stub Mapping* to *WireMock 3.5.0+ Stub Mapping*,
+  so that it is clearer that it is not only for version 3.5.0.
+- Hash name code completion now inserts an = symbol as well, right after the hash name, for smoother coding experience.
+- Improved the re-injection logic of Handlebars fragments to cover more cases when a JSON stub mapping files is changed.
+- Inject/uninject languages in open files upon enabling/disabling the corresponding WireMocha plugin settings.
+- Some wiremock-grpc-extension related logic is no longer enabled when the extension is not available in the project,
+  to do a small performance improvement.
+
+### Fixed
+- Eliminated *Slow operations are prohibited on EDT* errors regarding Handlebars language injections in stub mapping files.
+- Inject Handlebars fragments in JSON stub mapping files on project startup, only when Handlebars injection is enabled
+  in the plugin settings.
+- Start injecting Handlebars fragments in JSON stub mapping files when Handlebars injection gets enabled
+  in the plugin settings, and it wasn't before.
+
 ## 1.0.27
 
 ### Added
