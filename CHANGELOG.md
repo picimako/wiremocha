@@ -1,5 +1,23 @@
 # WireMocha Changelog
 
+## 1.0.29
+
+### Added
+- [88](https://github.com/picimako/wiremocha/issues/88): Added an Admin API client to the WireMock tool window, so that users are able to work with externally started
+standalone WireMock servers.
+- Added JSON language injection into `com.github.tomakehurst.wiremock.stubbing.StubMapping.buildFrom(String)`.
+- [107](https://github.com/picimako/wiremocha/issues/107): Added support for the `ignoreOrderOfSameNode` attribute of `EqualToXmlPattern` in the Java preview and the various stub mapping schemas.
+- [107](https://github.com/picimako/wiremocha/issues/107): Added the `id`, `bodyAsBase64`, `multipart` and `parts` attributes to the `request` and `originalRequest` model code completion.
+- [107](https://github.com/picimako/wiremocha/issues/107): Added default method argument validation for `preserveUserAgentProxyHeader()`, `disableConnectionReuse()`,
+`withMaxTemplateCacheEntries()` and `maxHttpClientConnections()` in `WireMockConfiguration`.
+- [107](https://github.com/picimako/wiremocha/issues/107): Added the `max-proxy-http-client-connections, `disable-proxy-client-connection-reuse, `max-http-client-connections`,
+and `disable-connection-reuse` CLI options to the Testcontainers code completion.
+- [107](https://github.com/picimako/wiremocha/issues/107): Added an inlay hint for `WireMockConfiguration.withMaxTemplateCacheEntries()` when passed in `null`
+to signal that it sets a no-limit cache.
+
+### Fixed
+- Added missing `StringValuePattern` options to the stub mapping schema when completing `MultiValuePattern` options.
+
 ## 1.0.28
 
 ### Added
