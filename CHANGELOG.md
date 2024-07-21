@@ -1,5 +1,21 @@
 # WireMocha Changelog
 
+## 1.0.30
+
+### Added
+- [110](https://github.com/picimako/wiremocha/issues/110): Added proxy and authentication configuration for the Admin API tool window.
+- [108](https://github.com/picimako/wiremocha/issues/108): Added support for the **Get all file names**, **Delete file by ID**, **Return the version of the WireMock server**,
+  **Return the health of the WireMock server** and **Get global settings** Admin API endpoints.
+- [112](https://github.com/picimako/wiremocha/issues/112): Added support for WireMock Cloud's Provisioning API in the WireMock tool window.
+
+### Changed
+- A few more exception types are handled that may occur when targeting endpoints on WireMock Cloud or other remote servers.
+- [105](https://github.com/picimako/wiremocha/issues/105): Many actions, inspections, intention actions and more are no longer considered for execution in projects
+  that don't use WireMock.
+
+### Fixed
+- [109](https://github.com/picimako/wiremocha/issues/109): Code completion of Handlebars hashes and request attributes are again available in mapping files outside content roots.
+
 ## 1.0.29
 
 ### Added
