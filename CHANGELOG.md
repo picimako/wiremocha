@@ -1,5 +1,14 @@
 # WireMocha Changelog
 
+## 1.0.31
+
+### Added
+- [114](https://github.com/picimako/wiremocha/issues/114): Added the `count` hash for the **pickRandom** Handlebars helper.
+
+### Changed
+- Moved a few hardcoded string literals to a property bundle to enable their potential future translation.
+- Various minor maintenance changes.
+
 ## 1.0.30
 
 ### Added
