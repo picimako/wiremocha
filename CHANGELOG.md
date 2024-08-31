@@ -1,5 +1,16 @@
 # WireMocha Changelog
 
+## 1.0.32
+
+### Added
+- [111](https://github.com/picimako/wiremocha/issues/111): Added a new option on the Admin API client GUI that can generate a request in the Http Client format
+  of the currently configured request, and copy it to the clipboard.
+- [116](https://github.com/picimako/wiremocha/issues/116): Added the *Reload gRPC descriptor files* endpoint from the wiremock-grpc-extension to the Admin API tool window.
+
+### Fixed
+- Fixed a `NullPointerException` regarding mapping file node decoration in the Project View.
+- The success message of the **Remove requests by criteria** Admin API endpoint now uses the correct message key.
+
 ## 1.0.31
 
 ### Added
