@@ -1,5 +1,47 @@
 # WireMocha Changelog
 
+## 1.0.35
+
+### Changed
+- [118](https://github.com/picimako/wiremocha/issues/118): Project view node decoration of custom stub mapping root directories now supports subprojects of workspaces
+  created by the Multi-Project Workspace plugin.
+- [118](https://github.com/picimako/wiremocha/issues/118): Workspaces are now supported during the lookup of `__files` directories when extracting response body strings to file
+  from the Java DSL, or inlining them from response body files.
+- [123](https://github.com/picimako/wiremocha/issues/123): Variable and field resolution are now also supported (to a certain extent) when generating HTTP Client requests from
+  Java DSL calls to Admin API endpoints.
+
+### Fixed
+- [121](https://github.com/picimako/wiremocha/issues/121): Values in `request.url` and `request.urlPath` JSON properties, as well as `urlEqualTo()` and `urlPathEqualTo()` calls are
+  no longer reported as potential regex patterns when they contain dot (.) symbols.
+- `Webhooks.webhook()` call chains without URLs specified are no longer reported when used outside `withServeEventListener()` and `withPostServeAction()` calls,
+  because the URL may be configured elsewhere in them.
+
+## 1.0.34
+
+### Added
+- Added new Admin API + HTTP Client specific live templates for file, settings, version and health related endpoints.
+- [61](https://github.com/picimako/wiremocha/issues/61): Extended the 'Open in HTTP Client' line marker icon to support the majority of Admin API Java calls (where feasible)
+  and generate path parameters and request body JSONs dynamically based on the configuration of those Java method calls.
+- Added the *Delete matching stub mapping (`DELETE /__admin/mappings/remove`)* endpoint to the Admin API tool window.
+
+### Changed
+- Supported IDE version range has changed to 2024.1.6 - 2024.3.*.
+
+### Fixed
+- Declarative <-> programmatic JUnit 5 related intentions are no longer available in projects that don't use WireMock.
+- Fixed the names of a few Admin API + HTTP Client specific live templates.
+- Fixed a `NoSuchElementException` that occurred when getting the last element of an empty collection during webhook configuration checks
+  in the Java DSL.
+- Fixed a `NullPointerException` that occurred when opening the plugin settings page.
+- [122](https://github.com/picimako/wiremocha/issues/122): Fixed the error message when reporting less than required argument count for `WireMock.and()` and `WireMock.or()`.
+- [122](https://github.com/picimako/wiremocha/issues/122): `WireMock.and()` and `WireMock.or()` are no longer reported with one argument when that argument's type is `StringValuePattern[]`.
+
+## 1.0.33
+
+### Fixed
+- [106](https://github.com/picimako/wiremocha/issues/106): Fixed exceptions that occurred during deleting helper hashes from injected Handlebars fragments.
+- [106](https://github.com/picimako/wiremocha/issues/106): Fixed an exception regarding Handlebars language injection when deleting JSON properties from stub mapping files.
+
 ## 1.0.32
 
 ### Added
