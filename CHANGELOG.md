@@ -1,5 +1,29 @@
 # WireMocha Changelog
 
+## 1.0.36
+
+### Added
+- [126](https://github.com/picimako/wiremocha/issues/126): Added a new quick fix, so that `ok().withBody().withHeader()` call chains with specific **application/json**, **application/xml** and
+  **text/xml** content type value can now be simplified directly as `okJson(body)`, `okXml(body)` and `okTextXml(body)`, respectively,
+  instead of first replacing it with `okForContentType()`.
+
+### Changed
+- Updated the WireMock dependency to use v3.9.2.
+- Added the `AbstractDateTimePattern#applyTruncationLast` property to the Java stub mapping preview.
+- Response definition simplification inspections are now disabled inside the `com.github.tomakehurst.wiremock.client.WireMock` class
+  because it caused false positives on the implementations of convenience methods this inspection is intended to simplify code to.
+- [125](https://github.com/picimako/wiremocha/issues/125): CLI argument code completion items in `WireMockContainer#withCliArg()` are now displayed at the top of the list even when there
+  are other, not necessarily relevant items (e.g. configuration properties) added by the IDE itself.
+
+### Fixed
+- Fixed an exception that occurred during handling Handlebars language injection into invalid JSON code elements.
+- Fixed an `InvalidVirtualFileAccessException` that occurred when the plugin attempted to inject Handlebars language
+  into files that no longer existed, e.g. when splitting multi-mapping files.
+- Fixed the `WebhookDefinition` JSON generation when converting a StubMapping in the Java DSL to an HTTP Client request.
+- Added the missing import statement for `se.bjurr.wiremockpact.wiremockpactlib.api.WireMockPactConfig` in the WireMockPactExtension
+  code template.
+- JSON request bodies of HTTP Client requests generated in the Admin API tool window now have proper indentation.
+
 ## 1.0.35
 
 ### Changed
