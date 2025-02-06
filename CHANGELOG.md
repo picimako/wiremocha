@@ -1,5 +1,34 @@
 # WireMocha Changelog
 
+## 1.0.38
+
+### Changed
+- Supported IDE version range has changed to 2024.2.5 - 2025.1-EAP.
+- Many refactorings and simplifications under the hood.
+- Disabled a no longer valid WireMock Cloud API endpoint in the Admin API tool window.
+- Raised the log level at one location regarding the Admin API tool window, so that the exception is displayed only in the
+  IDE logs, but not on the IDE Internal Errors panel.
+
+### Fixed
+- Added the missing validation for the value of the `format` hash in the `formatJson` and `formatXml` Handlebars helpers.
+- The Admin API tool window now again displays connection error and unknown host messages on the Admin root field when they occur.
+- Handle `java.net.SocketException`s properly when sending requests from the Admin API tool window.
+
+## 1.0.37
+
+### Added
+- [132](https://github.com/picimako/wiremocha/issues/132): Added support for the following Handlebars helpers: `formatJson`, `formatXml`, `jsonArrayAdd`, `jsonMerge`, `jsonRemove`, `toJson`.
+
+### Changed
+- The non-Handlebars language injections in JSON stub mapping files now use a simpler approach. In turn, they can no longer be enabled/disabled,
+  these language injections are always enabled.
+- Simplified the icon retrieval logic for wiremock-grpc-extension related line markers.
+- Updated WireMock dependency version to 3.10.0.
+- Some minor improvements under the hood.
+
+### Fixed
+- Handled a potential `NullPointerException` regarding Handlebars helper hash values.
+
 ## 1.0.36
 
 ### Added
