@@ -1,5 +1,15 @@
 # WireMocha Changelog
 
+## 1.0.39
+
+### Added
+- Added inspection to report Handlebars hash usage when they are not supported by the WireMock version that is currently used.
+
+### Changed
+- The plugin now uses WireMock 3.12.0.
+- Added to the stub mapping Java preview `EqualToXmlPattern`'s `namespaceAwareness` property.
+- Added support (completion, inspection, documentation) for the new `removeNulls` hash in the `jsonMerge` Handlebars helper.
+
 ## 1.0.38
 
 ### Changed
