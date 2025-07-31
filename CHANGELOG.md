@@ -1,5 +1,20 @@
 # WireMocha Changelog
 
+## 1.0.40
+
+### Added
+- Added the `maxValue` property to the LogNormal delay distribution schema, and the `clientIp` property to the RequestPattern schema.
+- Added the `maxValue` property handling of LogNormal, and the `clientIp` property handling of RequestPattern
+  to the Java preview and the Admin API request generation line marker.
+
+### Changed
+- Supported IDE version range has changed to 2025.2+.
+- Removed overall support (inspections, hints, schema, etc.) for WireMock 2.x, as WireMock 4.x is already is beta stage, and WireMock 3.x has a much wider adoption rate.
+- The plugin no longer handles WireMock 2.x specific Base64 encoding/decoding (`com.google.common.io.BaseEncoding`).
+  It uses `java.util.Base64` regardless of the used WireMock version.
+- The default argument value is now reported for `WireMockConfiguration#withWebhookThreadPoolSize()`.
+- The `webhook-threadpool-size` CLI argument is now code-completed for testcontainers configurations.
+
 ## 1.0.39
 
 ### Added
