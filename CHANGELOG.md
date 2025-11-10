@@ -1,5 +1,10 @@
 # WireMocha Changelog
 
+## 1.0.41
+
+### Changed
+- Various small improvements under the hood.
+
 ## 1.0.40
 
 ### Added
