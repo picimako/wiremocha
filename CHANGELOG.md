@@ -1,5 +1,33 @@
 # WireMocha Changelog
 
+## 1.0.42
+
+### Added
+- Admin API tool window: the HTTP Client request generation button now shows a tooltip that the generated request
+  is copied to the clipboard
+- Admin API tool window: add the Get and Delete context(s) endpoints introduced in v0.10.0 of the wiremock-state-extension
+- Admin API tool window: the Endpoints dropdown now shows endpoints separated by their group names, and the items are now searchable via speed search
+- Extensions: added inspections, code completion and documentation for the `jwt` helper's `maxAge` hash,
+  and for the `claims` and `claimsObject` helpers coming from the wiremock-jwt-extension.
+
+### Changed
+- Supported IDE version range has changed to 2025.3+
+- Admin API tool window: removed the WireMock Cloud support.
+  It was very limited in features, and the official WireMock plugin has already had a more feature rich support.
+  For now, the focus will be on improving the interactions with the Admin API.
+- Admin API tool window: moved the example text into the Admin root URL field as empty text, so there is more vertical space
+- Admin API tool window: changed the prefix of Admin API calls from the tool window from WireMocha to WireMock
+- Extensions: improved the lazy loading of data faker provider groups and names
+- Schemas: Added clarification comment in the plugin settings about limitations of schema assignment when using WireMocha along with the official WireMock plugin
+
+### Fixed
+- Admin API tool window: fixed a `ClassNotFoundException` that occurred when sending request to a standalone WireMock server
+  that served a mapping containing json-unit placeholders
+- Admin API tool window: query parameters are now generated into HTTP Client requests
+- Admin API tool window: fixed an exception for when sending a request to the 'Delete a file by ID' endpoint
+- Fixed a potential no class def found error regarding actions that copy data to the clipboard.
+- Schemas: fixed an exception that occurred when opening the schema selector in the IDE's bottom toolbar.
+
 ## 1.0.41
 
 ### Changed
